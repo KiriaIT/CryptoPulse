@@ -20,6 +20,9 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 
+# Cursor IDE (local rules — do not publish)
+.cursor/
+
 # Visual Studio Code
 .vscode/*
 !.vscode/settings.json
