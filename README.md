@@ -2,6 +2,10 @@
 
 Foundation work and alignment with team conventions.
 
+**Contributors:** 
+[KiriaIT](https://github.com/KiriaIT)
+[OgOqro](https://github.com/OgOqro)
+
 ---
 
 ## Completed this sprint

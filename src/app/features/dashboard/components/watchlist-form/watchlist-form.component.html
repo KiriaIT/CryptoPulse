@@ -1,0 +1,13 @@
+<form class="watchlist-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <mat-form-field appearance="outline" class="watchlist-form__field">
+    <mat-label>Symbol</mat-label>
+    <input matInput formControlName="symbol" autocomplete="off" maxlength="10" />
+    @if (form.controls.symbol.hasError('required') && form.controls.symbol.touched) {
+      <mat-error>{{ messages.SYMBOL_REQUIRED }}</mat-error>
+    }
+    @if (form.controls.symbol.hasError('pattern') && form.controls.symbol.touched) {
+      <mat-error>{{ messages.SYMBOL_PATTERN }}</mat-error>
+    }
+  </mat-form-field>
+  <button mat-flat-button color="primary" type="submit">Add to preview list</button>
+</form>
