@@ -20,7 +20,7 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 
-# Cursor IDE (local rules — do not publish)
+# Local editor configuration
 .cursor/
 
 # Visual Studio Code
@@ -41,6 +41,9 @@ yarn-error.log
 testem.log
 /typings
 __screenshots__/
+
+# Local design mockups / reference captures
+/pictures/
 
 # System files
 .DS_Store
