@@ -7,6 +7,8 @@ Crypto Pulse is a small cryptocurrency dashboard on Angular 21. It reads public 
 
 Team submission for the [Rolling Scopes Angular](https://rs.school) 4-sprint course.
 
+[![CI](https://github.com/KiriaIT/CryptoTracker/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/KiriaIT/CryptoTracker/actions/workflows/ci.yml)
+
 ## Team
 
 - [KiriaIT](https://github.com/KiriaIT)
@@ -33,7 +35,7 @@ yarn lint           # ESLint
 yarn test           # Vitest (Sprint 4)
 ```
 
-Node version aligned via NVM (`.nvmrc`).
+Node version aligned via NVM (`.nvmrc` — currently Node 22 for CI parity).
 
 ## Project Notes
 
@@ -58,4 +60,11 @@ Working tracker: [`PROJECT_TRACKER.md`](./PROJECT_TRACKER.md). Per-sprint checkl
 
 ## Deployment
 
-To be added once the Sprint 2 CI/CD pipeline lands.
+- **CI:** GitHub Actions runs `yarn install --frozen-lockfile`, `yarn lint`, and `yarn build --configuration production` on every push and pull request to `main` (see [`.github/workflows/ci.yml`](./.github/workflows/ci.yml)).
+- **Hosting:** Production builds deploy from this repo to **Vercel** (install/build/output + SPA rewrites are declared in [`vercel.json`](./vercel.json) at the repo root).
+
+**Production (Vercel):** add one markdown link on the next line after you copy the **Production** HTTPS URL from Vercel (`Project → Settings → Domains`). The course checklist expects that link to return HTTP 200.
+
+<!-- Example — replace with your real URL and delete this HTML comment:
+[Crypto Pulse production](https://your-project.vercel.app)
+-->

@@ -20,8 +20,10 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 
-# Local editor configuration
-.cursor/
+# Cursor: ignore local IDE noise; keep shared rules (see .cursor/rules/)
+.cursor/**
+!.cursor/rules/
+!.cursor/rules/**
 
 # Visual Studio Code
 .vscode/*
