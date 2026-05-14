@@ -4,7 +4,25 @@ alwaysApply: true
 
 # KHACHAPURI.JS — Crypto Pulse Conventions
 
-House rules for the Crypto Pulse codebase. Every rule below exists for one of two reasons: it makes the auto-parsed sprint checkpoints pass, or it gives the mentor / jury something concrete to point at when scoring. When the course spec (`CODE_STANDARDS.md`, `SPRINT*_CHECKPOINT.md`) contradicts anything here, the course spec wins — please open a PR to update this file.
+House rules for the Crypto Pulse codebase. Every rule below exists for one of two reasons: it makes the auto-parsed sprint checkpoints pass, or it gives the mentor / jury something concrete to point at when scoring.
+
+## Precedence (documentation wins)
+
+Resolve conflicts in this order. The higher row wins.
+
+1. Active sprint scope: `SPRINT_N_CHECKLIST.md` in the repo root (and any task text on the linked GitHub issue).
+2. Course pack / mentor spec when present: `CODE_STANDARDS.md`, `SPRINT*_CHECKPOINT.md`, or equivalent materials **if** they are in the workspace or explicitly pasted into the task.
+3. README sections that define product or deployment truth (e.g. **Project Notes**, **Deployment**).
+4. This file — team conventions and agent defaults.
+
+If this file drifts from (1)–(3), open a PR to fix **this** file, not the other way around.
+
+## Agent / contributor checklist (before opening a PR)
+
+- Confirm the change is in scope for the **current** `SPRINT_N_CHECKLIST.md` (no YAGNI scope creep).
+- Match **CI**: `yarn install --frozen-lockfile`, `yarn lint`, `yarn build --configuration production` (see `.github/workflows/ci.yml` and `.nvmrc`).
+- If the sprint or issue requires tests (e.g. Sprint 4 personal tests), run `yarn test` locally even though CI may not run it yet.
+- Tick the sprint checklist, link a `sprint-N` issue, use Conventional Commits, respect diary merge rules in **[G-08]**.
 
 ## A. Architecture & design
 
@@ -24,7 +42,7 @@ House rules for the Crypto Pulse codebase. Every rule below exists for one of tw
 ## G. General
 
 - **[G-01] TypeScript strict.** `strict: true` + `noImplicitOverride` + `noPropertyAccessFromIndexSignature`. No `any`, no `as any`, no `@ts-ignore`. RxJS error params come in as `unknown` — narrow before use.
-- **[G-02] File length.** Maximum 150 lines. If a component grows past that, split it or move logic into a service.
+- **[G-02] File length.** Target maximum **150 lines** per file. If a component or service grows past that, split templates, extract pure helpers to `shared/utils` or small focused services, or move sub-UI into child components — **before** adding unrelated logic. Sprint “showcase” files (`WalletService`, etc.) should still stay navigable: long files are a smell, not a goal.
 - **[G-03] Naming.**
   - Components: `PascalCaseComponent` (e.g. `WalletConnectModalComponent`)
   - Services: `PascalCaseService` (e.g. `WalletService`)
@@ -34,7 +52,7 @@ House rules for the Crypto Pulse codebase. Every rule below exists for one of tw
   - Interceptors: `camelCaseInterceptor` (e.g. `loadingInterceptor`)
   - Folders & files: `kebab-case`
   - Injection tokens: `SCREAMING_SNAKE_CASE` (e.g. `WALLET_CONFIG`)
-- **[G-04] Constants.** No hardcoded strings or numbers in components or services. Use `src/app/core/constants/*.constants.ts`.
+- **[G-04] Constants.** User-visible copy, validation messages, HTTP paths, `localStorage` keys, feature flags, and repeated numeric thresholds belong in `src/app/core/constants/*.constants.ts`. **Exclusions:** `@for` `track` expressions and other non-domain structural literals; trivial test-only strings inside `*.spec.ts`.
 - **[G-05] Logging & errors.**
   - HTTP errors are caught with `catchError` inside services and mapped to user-facing messages via `user-feedback.constants.ts`.
   - Global runtime errors go through `GlobalErrorHandler` → `LoggerService.error()` + `NotifierService.error()`.
@@ -79,7 +97,7 @@ House rules for the Crypto Pulse codebase. Every rule below exists for one of tw
 
 ## Q. Hygiene & quality
 
-- **[Q-01] CI gate.** `yarn lint` + `yarn build` must pass on every push and PR. CI enforces.
+- **[Q-01] CI gate.** What GitHub enforces today: `yarn lint` + `yarn build --configuration production` on every push and PR (see **[I-01]**). Also run `yarn test` locally when the active sprint checklist or issue requires tests.
 - **[Q-02] No dead code.** No unused imports, vars, or exports. ESLint surface zero warnings.
 - **[Q-03] Typed API.** Every HTTP response has an interface in `core/models/`. `unknown` exists only at the boundary, never bubbled into components.
 - **[Q-04] Accessibility.** Semantic HTML + ARIA labels on interactive elements. Modals trap focus. Color contrast at WCAG AA.
@@ -92,7 +110,7 @@ House rules for the Crypto Pulse codebase. Every rule below exists for one of tw
 
 ## I. CI & hosting
 
-- **[I-01] GitHub Actions.** `.github/workflows/ci.yml` runs on `push` and `pull_request` to `main`. Use the Node version from `.nvmrc`; gate with `yarn install --frozen-lockfile`, `yarn lint`, and `yarn build --configuration production` (same as [Q-01] locally).
+- **[I-01] GitHub Actions.** `.github/workflows/ci.yml` runs on `push` and `pull_request` to `main`. Use the Node major from `.nvmrc` (must match `setup-node` in the workflow). Steps: `yarn install --frozen-lockfile`, `yarn lint`, `yarn build --configuration production`. If the course later adds a test job, treat the workflow file as source of truth and update **[Q-01]** / **[S]** in the same PR.
 - **[I-02] Vercel.** Root `vercel.json` pins `installCommand`, `buildCommand`, `outputDirectory` (`dist/crypto-pulse/browser`), and SPA `rewrites` so deep routes work after refresh.
 - **[I-03] README deployment.** Keep the CI badge and a working **HTTPS** production link in README `Deployment` before Collaborator / checkpoint review.
 - **[I-04] Shared Cursor rules.** `.gitignore` keeps ephemeral `.cursor/` noise out but **commits** `.cursor/rules/` so the team shares the same agent conventions.
@@ -102,7 +120,7 @@ House rules for the Crypto Pulse codebase. Every rule below exists for one of tw
 - **[P-01] No Binance API key.** Trading endpoints are simulated through `MockApiService` (`of(...).pipe(delay())`). No NestJS backend. The deviation is documented in README "Project Notes".
 - **[P-02] Real public market data.** Prices come from Binance Spot Testnet public endpoints through `MarketDataService`. No auth header.
 - **[P-03] Mock trading data.** Portfolio holdings, orders, deposits, withdrawals come from `MOCK_*` constants combined with simulated latency.
-- **[P-04] `WalletService` is the centerpiece.** It demonstrates signals + computed + effect + RxJS + DI + persistence in one file. Use it as the reference when explaining the architecture.
+- **[P-04] `WalletService` is the centerpiece.** It demonstrates signals + computed + effect + RxJS + DI + persistence in one place. Use it as the reference when explaining the architecture; keep new domain logic cohesive and extract helpers when **[G-02]** pressure appears.
 - **[P-05] RS School logo.** Mandatory on the `/about` page (clickable, links to `https://rs.school`). Optional flair as an "RS Demo Wallet" entry in the wallet provider list, clearly marked as a course demo.
 - **[P-06] Beyond-API trio.** Wallet connect (mock), price alerts, virtual deposit / withdraw. All three persist to `localStorage`.
 
@@ -110,6 +128,7 @@ House rules for the Crypto Pulse codebase. Every rule below exists for one of tw
 
 - [ ] Ticks the relevant checkbox in `SPRINT_N_CHECKLIST.md`.
 - [ ] Links to a GitHub issue with a `sprint-N` label.
-- [ ] CI is green (lint + build + test).
+- [ ] CI is green per `.github/workflows/ci.yml` (install + lint + production build).
+- [ ] `yarn test` run locally when the sprint checklist or issue requires tests.
 - [ ] Commit message is in Conventional Commits format.
 - [ ] Reviewed by the other team member (from Sprint 2 onward).
