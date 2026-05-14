@@ -26,7 +26,7 @@ These are checked across the whole project — not tied to a single sprint.
 - [x] `tsconfig.json` `strict: true`, no `any` / `as any` / `@ts-ignore`
 - [x] ESLint + Prettier configured
 - [/] One reactive form exists, but Sprint 3 needs ≥3 fields — see [SPRINT_3_CHECKLIST.md](./SPRINT_3_CHECKLIST.md)
-- [ ] Deployment URL in README (Sprint 2 deliverable)
+- [/] Deployment URL in README — CI + Vercel docs landed; add the live HTTPS link in README `Deployment` when the production domain is final (Sprint 2 deliverable)
 
 ## Architecture decisions
 
@@ -143,8 +143,8 @@ Counted under Team Score (260 pts total).
 ### Product integrity (100 pts)
 
 - [x] Launchpad — local setup is `yarn install && yarn start`, documented in README.
-- [ ] Deployed (Sprint 2 deliverable).
-- [ ] CI/CD (Sprint 2 deliverable).
+- [/] Deployed (Sprint 2 deliverable) — Vercel from `main`; paste canonical URL into README `Deployment`.
+- [x] CI/CD (Sprint 2 deliverable) — GitHub Actions `ci.yml` (lint + production build).
 - [ ] UX/UI consistency across pages (judged at the team presentation).
 
 ## GitHub housekeeping (manual, done in the GitHub UI)
