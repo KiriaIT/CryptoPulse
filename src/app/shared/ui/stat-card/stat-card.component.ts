@@ -14,6 +14,8 @@ export class StatCardComponent {
   readonly expanded = model(false);
   readonly expandPulse = output<void>();
 
+  private myName = 'Oqro';
+
   protected toggle(): void {
     const next = !this.expanded();
     this.expanded.set(next);
