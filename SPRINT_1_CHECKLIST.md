@@ -19,9 +19,9 @@ One-week sprint. Scoring is binary: all requirements met → 20 points, any sing
 
 These items have to come from OgOqro's own GitHub account — co-author trailers do not count.
 
-- [ ] At least one custom component merged into `main` using `input()` or `output()`.
-- [ ] Diary entry at `development-notes/OgOqro/OgOqro-sprint-1-YYYY-MM-DD.md`, merged into `main`.
-- [ ] Entry includes Sprint 1 summary + Sprint 2 plan.
+- [x] At least one custom component merged into `main` using `input()` or `output()` — `WatchlistChipComponent` (`input.required` + `output`) and `PriceTickerComponent` (`input`), merged via PR #45.
+- [x] Diary entry at `development-notes/OgOqro/OgOqro-sprint-1-2026-05-14.md`, merged into `main` via PR #46.
+- [x] Entry includes Sprint 1 summary + Sprint 2 plan.
 
 ## Notes
 

@@ -51,7 +51,7 @@ Public Binance Testnet endpoints (market data) remain the real data source. HMAC
 
 Per-contributor diary entries: [`development-notes/`](./development-notes).
 
-- **Sprint 1** — Project setup, standalone components, signal-based APIs. Notes: [KiriaIT](./development-notes/KiriaIT/KiriaIT-sprint-1-2026-05-11.md).
+- **Sprint 1** — Project setup, standalone components, signal-based APIs. Notes: [KiriaIT](./development-notes/KiriaIT/KiriaIT-sprint-1-2026-05-11.md), [OgOqro](./development-notes/OgOqro/OgOqro-sprint-1-2026-05-14.md).
 - **Sprint 2** — Routing, lazy loading, guards, signals, DI. In progress. Notes: [KiriaIT](./development-notes/KiriaIT/KiriaIT-sprint-2-2026-05-13.md).
 - **Sprint 3** — Directives, pipes, reactive forms. Upcoming.
 - **Sprint 4** — HTTP, RxJS, testing. Upcoming.
