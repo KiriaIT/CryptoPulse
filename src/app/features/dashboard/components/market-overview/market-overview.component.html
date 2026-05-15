@@ -39,10 +39,7 @@
           <li class="market-overview__item">
             <span class="market-overview__rank">#{{ row.rank }}</span>
             <span class="market-overview__name">{{ row.symbol }}</span>
-            <app-price-ticker
-              [price]="row.lastPrice"
-              [changePct]="row.changePct24h"
-            ></app-price-ticker>
+            <app-price-ticker [price]="row.lastPrice" [changePct]="row.changePct24h" />
           </li>
         }
       </ul>
