@@ -1,5 +1,11 @@
-import { DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, input, resource } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  resource,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { firstValueFrom } from 'rxjs';
@@ -8,10 +14,11 @@ import { DASHBOARD_STAT_LABELS } from '../../../../core/constants/dashboard-ui.c
 import { MarketTickerRow } from '../../../../core/models/market-ticker-row.model';
 import { MarketDataService } from '../../../../core/services/market-data.service';
 import { StatCardComponent } from '../../../../shared/ui/stat-card/stat-card.component';
+import { PriceTicker } from '../../../../shared/ui/price-ticker/price-ticker';
 
 @Component({
   selector: 'app-market-overview',
-  imports: [DecimalPipe, MatButtonModule, MatProgressSpinnerModule, StatCardComponent],
+  imports: [MatButtonModule, MatProgressSpinnerModule, StatCardComponent, PriceTicker],
   templateUrl: './market-overview.component.html',
   styleUrl: './market-overview.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -39,20 +39,10 @@
           <li class="market-overview__item">
             <span class="market-overview__rank">#{{ row.rank }}</span>
             <span class="market-overview__name">{{ row.symbol }}</span>
-            <span class="market-overview__meta">
-              @if (row.changePct24h !== null) {
-                24h {{ row.changePct24h | number : '1.0-2' }}%
-              } @else {
-                —
-              }
-            </span>
-            <span class="market-overview__price">
-              @if (row.lastPrice !== null) {
-                {{ row.lastPrice | number : '1.0-2' }} USDT
-              } @else {
-                —
-              }
-            </span>
+            <app-price-ticker
+              [price]="row.lastPrice"
+              [changePct]="row.changePct24h"
+            ></app-price-ticker>
           </li>
         }
       </ul>
