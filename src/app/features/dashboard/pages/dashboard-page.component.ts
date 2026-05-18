@@ -14,10 +14,11 @@ import { APP_CONFIG } from '../../../core/tokens/app-config.token';
 import { WatchlistChip } from '../../../shared/ui/watchlist-chip/watchlist-chip';
 import { MarketOverviewComponent } from '../components/market-overview/market-overview.component';
 import { WatchlistFormComponent } from '../components/watchlist-form/watchlist-form.component';
+import { ClickerCoin } from '../../../shared/ui/clicker-coin/clicker-coin';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [MarketOverviewComponent, WatchlistChip, WatchlistFormComponent],
+  imports: [MarketOverviewComponent, WatchlistChip, WatchlistFormComponent, ClickerCoin],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

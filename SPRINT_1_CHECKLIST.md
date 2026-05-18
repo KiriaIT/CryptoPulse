@@ -27,7 +27,7 @@ These items have to come from OgOqro's own GitHub account — co-author trailers
 
 Same Sprint 1 bar as above. Commits must show **Freemason-12** as author — OgOqro's merged work does not count toward Freemason's score.
 
-- [ ] At least one custom component in `main` using `input()` and/or `output()` — authored and merged from Freemason-12's account.
+- [X] At least one custom component in `main` using `input()` and/or `output()` — authored and merged from Freemason-12's account.
 - [ ] Diary entry at `development-notes/Freemason-12/Freemason-12-sprint-1-YYYY-MM-DD.md`, merged via PR (**no squash-merge** on diary commits).
 - [ ] Entry includes Sprint 1 summary + plan for Sprint 2, and describes ≥2 feature components personally built (see `PROJECT_TRACKER.md` diary rules).
 
