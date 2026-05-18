@@ -26,7 +26,7 @@ These are checked across the whole project — not tied to a single sprint.
 - [x] `tsconfig.json` `strict: true`, no `any` / `as any` / `@ts-ignore`
 - [x] ESLint + Prettier configured
 - [/] One reactive form exists, but Sprint 3 needs ≥3 fields — see [SPRINT_3_CHECKLIST.md](./SPRINT_3_CHECKLIST.md)
-- [/] Deployment URL in README — CI + Vercel docs landed; add the live HTTPS link in README `Deployment` when the production domain is final (Sprint 2 deliverable)
+- [x] Deployment URL in README — [production link](https://crypto-tracker-eta-peach.vercel.app) in README `Deployment` (Sprint 2 deliverable)
 
 ## Architecture decisions
 
@@ -143,7 +143,7 @@ Counted under Team Score (260 pts total).
 ### Product integrity (100 pts)
 
 - [x] Launchpad — local setup is `yarn install && yarn start`, documented in README.
-- [/] Deployed (Sprint 2 deliverable) — Vercel from `main`; paste canonical URL into README `Deployment`.
+- [x] Deployed (Sprint 2 deliverable) — Vercel from `main`; canonical URL in README `Deployment`.
 - [x] CI/CD (Sprint 2 deliverable) — GitHub Actions `ci.yml` (lint + production build).
 - [ ] UX/UI consistency across pages (judged at the team presentation).
 
@@ -152,18 +152,29 @@ Counted under Team Score (260 pts total).
 These items can't land via PR — the repo owner does them in Settings:
 
 - [x] Invite `rollingscopes` (Read access) — **Settings → Collaborators** (pending acceptance from their side).
+- [ ] Invite **Freemason-12** (Write access) — **Settings → Collaborators** → accept from their side before first PR.
 - [ ] Enable branch protection on `main` — **Settings → Branches → Add rule** → require PR + 1 review + status checks (CI workflow once it exists).
 - [ ] Create a Project (Kanban board) under the **Projects** tab. Link the URL from this file once created.
 - [ ] Add labels: `sprint-1`, `sprint-2`, `sprint-3`, `sprint-4`, `feature`, `bug`, `chore`, `ci`, `docs`, `beyond-api`.
 - [ ] Update the repo description to something tight, e.g. "CryptoTrade clone on Angular 21 — signals, standalone, strict TS, OnPush, mock wallet, Binance Spot Testnet."
 - [ ] Optional: rename repo `CryptoTracker` → `crypto-pulse` for slug consistency with `package.json`.
 
-## OgOqro onboarding
+## Freemason-12 onboarding (active second contributor)
 
-`development-notes/OgOqro/` is ready for OgOqro's first commits. To pick up his Sprint 1 + Sprint 2 individual requirements he needs to author (himself, from his own GitHub account):
+Folder: [`development-notes/Freemason-12/`](./development-notes/Freemason-12/README.md).
 
-- At least one Feature Component in `main` using `input()` or `output()` — see Sprint 1 checklist.
-- His own Sprint 1 diary entry (and Sprint 2 entry when the sprint ends) in `development-notes/OgOqro/`.
-- A small Sprint 2 deliverable — most natural is one new lazy-loaded route or one signal-based component — so the auto-parser sees commits from his GitHub user.
+**Sprint 1 catch-up (his account only):**
 
-Keep his commits separate (not as `Co-authored-by:` trailers) so contributor attribution is unambiguous.
+- One Feature Component in `main` with `input()` / `output()`.
+- `Freemason-12-sprint-1-YYYY-MM-DD.md` diary (≥2 components described; plan for Sprint 2).
+- No squash-merge on diary PRs.
+
+**Sprint 2+:** See [`SPRINT_2_CHECKLIST.md`](./SPRINT_2_CHECKLIST.md) section **Individual — Freemason-12** — lazy route, `unsavedFormGuard`, signals, services, diary.
+
+**KiriaIT owns:** `WalletService`, `walletConnectedGuard`, `/connect`, branch protection, labels, Kanban, inviting collaborators.
+
+OgOqro's Sprint 1 commits and diary remain in `main` for history; they do not satisfy Freemason's individual Sprint 1 score.
+
+## OgOqro (historical)
+
+Sprint 1 individual items completed. Left before Sprint 2; diary and components stay attributed to OgOqro in git history.

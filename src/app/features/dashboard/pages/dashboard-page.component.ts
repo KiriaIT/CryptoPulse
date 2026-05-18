@@ -11,12 +11,13 @@ import {
 
 import { STORAGE_KEYS } from '../../../core/constants/storage-keys.constants';
 import { APP_CONFIG } from '../../../core/tokens/app-config.token';
+import { WatchlistChip } from '../../../shared/ui/watchlist-chip/watchlist-chip';
 import { MarketOverviewComponent } from '../components/market-overview/market-overview.component';
 import { WatchlistFormComponent } from '../components/watchlist-form/watchlist-form.component';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [MarketOverviewComponent, WatchlistFormComponent],
+  imports: [MarketOverviewComponent, WatchlistChip, WatchlistFormComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
