@@ -12,14 +12,14 @@ Two-week sprint. Scoring is binary: all requirements met → 40 points, any sing
 - [ ] **At least 3 components use OnPush** — already met (we have ≥7). Sprint 3 adds Markets / Portfolio / Settings, which will be OnPush by default.
 - [ ] **Sprint 3 diary entry** at `development-notes/KiriaIT/KiriaIT-sprint-3-YYYY-MM-DD.md`.
 
-## Individual — OgOqro
+## Individual — Freemason-12
 
 Same list, all his own commits in `main`. Suggested split so we don't duplicate:
 
 - [ ] `CurrencyCompactPipe` (KiriaIT does `PercentChangePipe`) — same Pipe requirement covered.
 - [ ] Profile Settings reactive form (KiriaIT does Price Alert) — same form requirement covered.
 - [ ] One of the other custom validators / `WALLET_CONFIG` provider (KiriaIT does another).
-- [ ] Diary entry at `development-notes/OgOqro/OgOqro-sprint-3-YYYY-MM-DD.md`.
+- [ ] Diary entry at `development-notes/Freemason-12/Freemason-12-sprint-3-YYYY-MM-DD.md`.
 
 ## Implementation notes for Sprint 3
 

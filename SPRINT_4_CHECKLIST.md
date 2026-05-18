@@ -16,17 +16,17 @@ Two-week sprint. Scoring is binary: all requirements met → 40 points, any sing
 - [ ] **HttpClient used** for at least two requests, one GET + one POST/PUT/DELETE. The POST/PUT/DELETE goes through `MockApiService` (see below).
 - [ ] **At least one HTTP Interceptor.** Functional `HttpInterceptorFn` — `loadingInterceptor` is the canonical pick.
 - [ ] **At least 5 personal tests.** `WalletService.spec.ts`, `walletConnectedGuard.spec.ts`, `PercentChangePipe.spec.ts`, `MarketDataService.spec.ts`, plus one component smoke test.
-- [ ] **Code Review.** Either (A) ≥3 substantive comments left on OgOqro's PRs, or (B) a diary entry analysing his code.
+- [ ] **Code Review.** Either (A) ≥3 substantive comments left on Freemason-12's PRs, or (B) a diary entry analysing his code.
 - [ ] **Sprint 4 diary entry** at `development-notes/KiriaIT/KiriaIT-sprint-4-YYYY-MM-DD.md`.
 
-## Individual — OgOqro
+## Individual — Freemason-12
 
 Same five items, his own commits in `main`. Suggested split:
 
 - [ ] He writes `errorInterceptor` (KiriaIT writes `loadingInterceptor`) — both interceptors land in the chain.
 - [ ] His 5 tests target the pieces he authored — directives, services, components from his Sprint 3 surface.
 - [ ] Code review on KiriaIT's PRs.
-- [ ] Diary entry at `development-notes/OgOqro/OgOqro-sprint-4-YYYY-MM-DD.md`.
+- [ ] Diary entry at `development-notes/Freemason-12/Freemason-12-sprint-4-YYYY-MM-DD.md`.
 
 ## Implementation notes for Sprint 4
 
@@ -96,7 +96,7 @@ Wired in `app.config.ts` via `provideHttpClient(withFetch(), withInterceptors([l
 
 ### `errorInterceptor`
 
-OgOqro's counterpart:
+Freemason-12's counterpart:
 
 ```ts
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {

@@ -7,12 +7,13 @@ Crypto Pulse is a small cryptocurrency dashboard on Angular 21. It reads public 
 
 Team submission for the [Rolling Scopes Angular](https://rs.school) 4-sprint course.
 
-[![CI](https://github.com/KiriaIT/CryptoTracker/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/KiriaIT/CryptoTracker/actions/workflows/ci.yml)
+[![CI](https://github.com/KiriaIT/CryptoPulse/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/KiriaIT/CryptoPulse/actions/workflows/ci.yml)
 
 ## Team
 
-- [KiriaIT](https://github.com/KiriaIT)
-- [OgOqro](https://github.com/OgOqro)
+- [KiriaIT](https://github.com/KiriaIT) — team lead
+- [OgOqro](https://github.com/OgOqro) — first contributor
+- [Freemason-12](https://github.com/Freemason-12) — second contributor
 
 ## Stack
 
@@ -49,22 +50,50 @@ Public Binance Testnet endpoints (market data) remain the real data source. HMAC
 
 ## Sprint progress
 
-Per-contributor diary entries: [`development-notes/`](./development-notes).
+Remaining work by sprint. Full requirements: [`SPRINT_1_CHECKLIST.md`](./SPRINT_1_CHECKLIST.md) … [`SPRINT_4_CHECKLIST.md`](./SPRINT_4_CHECKLIST.md), [`PROJECT_TRACKER.md`](./PROJECT_TRACKER.md).
 
-- **Sprint 1** — Project setup, standalone components, signal-based APIs. Notes: [KiriaIT](./development-notes/KiriaIT/KiriaIT-sprint-1-2026-05-11.md), [OgOqro](./development-notes/OgOqro/OgOqro-sprint-1-2026-05-14.md).
-- **Sprint 2** — Routing, lazy loading, guards, signals, DI. In progress. Notes: [KiriaIT](./development-notes/KiriaIT/KiriaIT-sprint-2-2026-05-13.md).
+<<<<<<< HEAD
+- **Sprint 1** — Project setup, standalone components, signal-based APIs. Notes: [KiriaIT](./development-notes/KiriaIT/KiriaIT-sprint-1-2026-05-11.md), [OgOqro](./development-notes/OgOqro/OgOqro-sprint-1-2026-05-14.md) (historical). **Freemason-12:** add your Sprint 1 diary under [`development-notes/Freemason-12/`](./development-notes/Freemason-12/) — see onboarding README there.
+- **Sprint 2** — Routing, lazy loading, guards, signals, DI. In progress. Notes: [KiriaIT](./development-notes/KiriaIT/KiriaIT-sprint-2-2026-05-13.md). **Freemason-12:** Sprint 2 diary + individual items per [`SPRINT_2_CHECKLIST.md`](./SPRINT_2_CHECKLIST.md).
 - **Sprint 3** — Directives, pipes, reactive forms. Upcoming.
 - **Sprint 4** — HTTP, RxJS, testing. Upcoming.
+=======
+### Sprint 1
+>>>>>>> 32e9a5e (feat: add WatchlistChip component to dashboard page imports and updated files for new member)
 
-Working tracker: [`PROJECT_TRACKER.md`](./PROJECT_TRACKER.md). Per-sprint checklists at [`SPRINT_1_CHECKLIST.md`](./SPRINT_1_CHECKLIST.md), [`SPRINT_2_CHECKLIST.md`](./SPRINT_2_CHECKLIST.md), [`SPRINT_3_CHECKLIST.md`](./SPRINT_3_CHECKLIST.md), [`SPRINT_4_CHECKLIST.md`](./SPRINT_4_CHECKLIST.md).
+- Standalone component with `input()` / `output()` merged to `main`.
+- Sprint 1 diary in [`development-notes/`](./development-notes/) (no squash-merge on diary PRs).
+
+### Sprint 2 (in progress)
+
+- At least 6 GitHub Issues (title, description, sprint label).
+- GitHub: collaborator Write access, branch protection on `main`, labels, Project board.
+- `WalletService` — signals, computed, effect, RxJS connect, `localStorage`.
+- `/connect` lazy route and connect UI.
+- `walletConnectedGuard` and `unsavedFormGuard` (functional guards).
+- More lazy routes (e.g. `/markets`, `/portfolio`).
+- Sprint 2 diaries.
+
+### Sprint 3
+
+- Custom directive or pipe with real template usage.
+- Reactive forms — ≥3 fields, ≥2 validator types, inline errors, working submit.
+- `InjectionToken` / custom provider.
+- Markets, Portfolio, Settings feature pages.
+- Sprint 3 diaries.
+
+### Sprint 4
+
+- ~1 min demo video (404, loading, error) linked from README.
+- `MockApiService` — HttpClient GET + mocked POST/PUT/DELETE.
+- `loadingInterceptor` and `errorInterceptor`.
+- ≥5 Vitest specs per contributor.
+- PR code reviews.
+- Sprint 4 diaries.
 
 ## Deployment
 
 - **CI:** GitHub Actions runs `yarn install --frozen-lockfile`, `yarn lint`, and `yarn build --configuration production` on every push and pull request to `main` (see [`.github/workflows/ci.yml`](./.github/workflows/ci.yml)).
 - **Hosting:** Production builds deploy from this repo to **Vercel** (install/build/output + SPA rewrites are declared in [`vercel.json`](./vercel.json) at the repo root).
 
-**Production (Vercel):** add one markdown link on the next line after you copy the **Production** HTTPS URL from Vercel (`Project → Settings → Domains`). The course checklist expects that link to return HTTP 200.
-
-<!-- Example — replace with your real URL and delete this HTML comment:
-[Crypto Pulse production](https://your-project.vercel.app)
--->
+**Production (Vercel):** [Crypto Pulse production](https://crypto-tracker-eta-peach.vercel.app) (HTTPS, HTTP 200 on `/` and deep routes via SPA rewrites in [`vercel.json`](./vercel.json)).

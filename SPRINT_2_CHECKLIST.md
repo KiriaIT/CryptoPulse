@@ -4,7 +4,7 @@ Two-week sprint. Scoring is binary: all requirements met → 40 points, any sing
 
 ## Team requirements (20 pts)
 
-- [ ] **Deployment.** README links to a working frontend URL that returns HTTP 200. Plan: GitHub Pages via the same Actions workflow (see below). Vercel / Netlify also fine.
+- [x] **Deployment.** README links to a working frontend URL that returns HTTP 200. Plan: GitHub Pages via the same Actions workflow (see below). Vercel / Netlify also fine.
 - [ ] **GitHub Actions workflow.** `.github/workflows/ci.yml` runs on push and PR. Minimum: `yarn install --frozen-lockfile` + `yarn lint`. Recommended additions: `yarn build --configuration production`, plus `actions/deploy-pages@v4` for the deploy step.
 - [ ] **At least 6 issues.** GitHub Issues, each with title + description + label. Drafts ready to paste at the bottom of this file.
 - [x] **Linter configured.** `eslint.config.mjs` already in repo (Angular plugin + type-checked TS rules).
@@ -18,16 +18,16 @@ Two-week sprint. Scoring is binary: all requirements met → 40 points, any sing
 - [x] **≥2 services with `@Injectable()` + `inject()`** — `MarketDataService`, `ConsoleLoggerService`, `SnackBarNotifierService`, `GlobalErrorHandler` already meet this. `WalletService` will be the new showcase.
 - [/] **Sprint 2 diary entry** — file exists at `development-notes/KiriaIT/KiriaIT-sprint-2-2026-05-13.md`, retrospective gets filled in before the deadline.
 
-## Individual — OgOqro
+## Individual — Freemason-12
 
-OgOqro must author these commits himself for the auto-parser to attribute credit.
+Freemason-12 must author these commits himself for the auto-parser to attribute credit. Onboarding: [`development-notes/Freemason-12/README.md`](./development-notes/Freemason-12/README.md).
 
 - [ ] ≥3 routes contributed (typically: pick up `/markets` or `/portfolio` and author the route registration + page component).
 - [ ] At least one lazy-loaded route from his commits.
-- [ ] At least one functional guard authored by him (he can take `unsavedFormGuard: CanDeactivateFn` while KiriaIT takes `walletConnectedGuard`).
+- [ ] At least one functional guard authored by him (`unsavedFormGuard: CanDeactivateFn` while KiriaIT takes `walletConnectedGuard`).
 - [ ] Signal usage in ≥2 components from his commits.
 - [ ] ≥2 services with `@Injectable()` authored or substantially extended by him.
-- [ ] Diary entry at `development-notes/OgOqro/OgOqro-sprint-2-YYYY-MM-DD.md`.
+- [ ] Diary entry at `development-notes/Freemason-12/Freemason-12-sprint-2-YYYY-MM-DD.md`.
 
 ## Implementation notes for Sprint 2
 
@@ -109,7 +109,7 @@ Enable Pages first in **Settings → Pages → Source: GitHub Actions**. Then pa
 
 ### GitHub issues to create (≥6)
 
-Paste each block into a new Issue on GitHub, apply the `sprint-2` label, assign yourself or OgOqro accordingly.
+Paste each block into a new Issue on GitHub, apply the `sprint-2` label, assign yourself or Freemason-12 accordingly.
 
 #### 1. `feat(wallet): add WalletService with signal-based session state`
 
