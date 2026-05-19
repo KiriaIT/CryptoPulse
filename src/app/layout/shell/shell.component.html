@@ -1,9 +1,116 @@
-<div class="shell">
-  <header class="shell__header">
-    <span class="shell__brand">{{ appName }}</span>
-  </header>
+<div class="flex h-screen bg-background overflow-hidden">
 
-  <main class="shell__main">
-    <router-outlet />
-  </main>
+  <!-- ─── Sidebar ─────────────────────────────────────────────── -->
+  <aside class="w-48 flex flex-col bg-card border-r border-border shrink-0">
+    <div class="flex items-center gap-2.5 px-4 py-5 border-b border-border">
+      <div class="w-7 h-7 bg-primary rounded-md flex items-center justify-center shrink-0">
+        <lucide-icon [img]="icons.LayoutDashboard" class="text-primary-foreground" [size]="14" />
+      </div>
+      <span class="font-semibold text-sm text-foreground tracking-tight">{{ appName }}</span>
+    </div>
+
+    <nav class="flex-1 px-2 py-3 flex flex-col gap-0.5" aria-label="Main navigation">
+      @for (item of navItems; track item.path + item.label) {
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="bg-primary text-primary-foreground"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+          [attr.aria-label]="item.label"
+        >
+          <lucide-icon [img]="item.icon" [size]="16" aria-hidden="true" />
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+
+    <div class="px-3 py-4 border-t border-border">
+      <p class="text-xs text-muted-foreground mb-1">Need help?</p>
+      <a
+        href="https://rs.school"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center gap-1.5 text-xs text-foreground hover:underline"
+      >
+        <lucide-icon [img]="icons.HelpCircle" [size]="12" aria-hidden="true" />
+        Contact Support
+      </a>
+    </div>
+  </aside>
+
+  <!-- ─── Main area ─────────────────────────────────────────────── -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <header class="flex items-center justify-between px-6 py-3 bg-card border-b border-border shrink-0">
+      <label class="flex items-center gap-2 bg-secondary border border-border rounded-lg px-3 py-2 w-72 cursor-text">
+        <lucide-icon [img]="icons.Search" [size]="15" class="text-muted-foreground shrink-0" aria-hidden="true" />
+        <input
+          type="search"
+          placeholder="Search coins, markets, wallets..."
+          class="bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none w-full"
+          aria-label="Search"
+        />
+      </label>
+
+      <div class="flex items-center gap-2">
+
+        <!-- Dark mode toggle -->
+        <button
+          class="p-2 rounded-md text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+          (click)="toggleTheme()"
+          [attr.aria-label]="isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+          [attr.aria-pressed]="isDark()"
+        >
+          @if (isDark()) {
+            <lucide-icon [img]="icons.Sun" [size]="18" />
+          } @else {
+            <lucide-icon [img]="icons.Moon" [size]="18" />
+          }
+        </button>
+
+        <!-- Notifications -->
+        <div class="relative">
+          <button
+            class="p-2 rounded-md text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+            (click)="toggleNotifs()"
+            aria-label="Notifications"
+            [attr.aria-expanded]="showNotifs()"
+          >
+            <lucide-icon [img]="icons.Bell" [size]="18" />
+          </button>
+
+          @if (showNotifs()) {
+            <div
+              class="absolute right-0 top-11 w-72 bg-card border border-border rounded-xl shadow-lg z-50"
+              role="dialog"
+              aria-label="Notifications panel"
+            >
+              <div class="flex items-center justify-between px-4 py-3 border-b border-border">
+                <span class="text-sm font-semibold text-foreground">Notifications</span>
+                <button
+                  class="text-muted-foreground hover:text-foreground transition-colors"
+                  (click)="toggleNotifs()"
+                  aria-label="Close notifications"
+                >
+                  <lucide-icon [img]="icons.X" [size]="15" />
+                </button>
+              </div>
+              <div class="flex flex-col items-center justify-center py-10 text-center px-4">
+                <lucide-icon [img]="icons.Bell" [size]="32" class="text-muted-foreground mb-3" aria-hidden="true" />
+                <p class="text-sm font-medium text-foreground">No notifications</p>
+                <p class="text-xs text-muted-foreground mt-1">You're all caught up! Check back later.</p>
+              </div>
+            </div>
+          }
+        </div>
+
+        <app-wallet-status-badge />
+      </div>
+    </header>
+
+    <main class="flex-1 overflow-y-auto bg-background">
+      <router-outlet />
+    </main>
+  </div>
 </div>

@@ -1,0 +1,77 @@
+<section class="px-6 py-6 flex flex-col gap-5">
+  <div>
+    <h1 class="text-2xl font-bold text-foreground">My Portfolio</h1>
+    <p class="text-sm text-muted-foreground mt-1">Manage and track your cryptocurrency holdings.</p>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
+    <div class="rounded-lg border border-border bg-card p-5">
+      <p class="text-xs text-muted-foreground uppercase tracking-wide mb-2">Total Value</p>
+      <!-- TODO(OgOqro): replace with {{ totalValue() }} -->
+      <p class="text-2xl font-bold text-foreground">$147.34K</p>
+    </div>
+    <div class="rounded-lg border border-border bg-card p-5">
+      <p class="text-xs text-muted-foreground uppercase tracking-wide mb-2">7d Change</p>
+      <!-- TODO(OgOqro): replace with {{ change7d() }} + dynamic color -->
+      <p class="text-2xl font-bold text-green-600">+14.05%</p>
+    </div>
+    <div class="rounded-lg border border-border bg-card p-5">
+      <p class="text-xs text-muted-foreground uppercase tracking-wide mb-2">Total Assets</p>
+      <!-- TODO(OgOqro): replace with {{ totalAssets() }} -->
+      <p class="text-2xl font-bold text-foreground">12</p>
+    </div>
+    <div class="rounded-lg border border-border bg-card p-5">
+      <p class="text-xs text-muted-foreground uppercase tracking-wide mb-2">Best Asset</p>
+      <!-- TODO(OgOqro): replace with {{ bestAsset() }} -->
+      <p class="text-2xl font-bold text-foreground">BTC</p>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="text-lg font-semibold text-foreground mb-3">Your Holdings</h2>
+    <div class="rounded-lg border border-border bg-card overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-secondary text-muted-foreground text-left">
+          <tr>
+            <th class="px-4 py-3 font-medium">Asset</th>
+            <th class="px-4 py-3 font-medium">Holdings</th>
+            <th class="px-4 py-3 font-medium">Price</th>
+            <th class="px-4 py-3 font-medium">Value</th>
+            <th class="px-4 py-3 font-medium">24h</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (holdings().length === 0) {
+            <tr>
+              <td colspan="5" class="px-4 py-10 text-center text-muted-foreground">
+                No holdings yet. Connect your wallet to see your portfolio.
+              </td>
+            </tr>
+          }
+          <!-- TODO(OgOqro): wire to real portfolioService.holdings() -->
+          @for (holding of holdings(); track holding.symbol) {
+            <tr class="border-t border-border hover:bg-secondary/50 transition-colors">
+              <td class="px-4 py-3 flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-xs font-bold text-foreground" aria-hidden="true">
+                  {{ holding.symbol.slice(0, 2) }}
+                </div>
+                <div>
+                  <div class="font-medium text-foreground">{{ holding.symbol }}</div>
+                  <div class="text-xs text-muted-foreground">{{ holding.name }}</div>
+                </div>
+              </td>
+              <td class="px-4 py-3 text-foreground">{{ holding.amount | number: '1.4-4' }}</td>
+              <td class="px-4 py-3 text-foreground">${{ holding.price | number: '1.2-2' }}</td>
+              <td class="px-4 py-3 font-medium text-foreground">${{ holding.value | number: '1.2-2' }}</td>
+              <td class="px-4 py-3 font-medium"
+                [class.text-green-600]="holding.changePct24h >= 0"
+                [class.text-destructive]="holding.changePct24h < 0">
+                {{ holding.changePct24h >= 0 ? '+' : '' }}{{ holding.changePct24h | number: '1.2-2' }}%
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

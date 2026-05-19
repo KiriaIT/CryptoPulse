@@ -1,0 +1,29 @@
+<div class="rounded-lg border border-border bg-card p-5 h-full flex flex-col">
+  <h2 class="text-base font-semibold text-foreground mb-4">Asset Allocation</h2>
+
+  <div class="flex-1 flex items-center justify-center">
+    <svg viewBox="0 0 100 100" class="w-32 h-32" aria-label="Asset allocation donut chart" role="img">
+      @for (slice of donutSlices(); track slice.name) {
+        <circle
+          cx="50" cy="50" r="40"
+          fill="none"
+          [attr.stroke]="slice.color"
+          stroke-width="18"
+          [attr.stroke-dasharray]="sliceDash(slice.percent)"
+          [attr.stroke-dashoffset]="sliceOffset(slice.offset)"
+          transform="rotate(-90 50 50)"
+        />
+      }
+      <circle cx="50" cy="50" r="28" fill="var(--card)" />
+    </svg>
+  </div>
+
+  <div class="grid grid-cols-2 gap-x-4 gap-y-1.5 mt-3">
+    @for (slice of donutSlices(); track slice.name) {
+      <div class="flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full shrink-0" [style.background-color]="slice.color" aria-hidden="true"></span>
+        <span class="text-xs text-muted-foreground">{{ slice.name }}</span>
+      </div>
+    }
+  </div>
+</div>

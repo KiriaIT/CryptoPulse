@@ -1,32 +1,46 @@
-<section class="dashboard">
-  <h1 class="dashboard__title">{{ appName }}</h1>
-  <p class="dashboard__lead">
-    Course-aligned workspace: live snapshot from <strong>Binance Spot Testnet</strong> (see
-    <code>PROJECT_CRYPTO.md</code>), resilient HTTP handling, and a validated watchlist preview
-    stored in this browser session.
-  </p>
+<section class="px-6 py-6 flex flex-col gap-5">
+
+  <!-- Page title -->
   <div>
-    <clicker-coin />
+    <h1 class="text-2xl font-bold text-foreground">Dashboard</h1>
+    <p class="text-sm text-muted-foreground mt-0.5">Welcome back! Here's your portfolio overview.</p>
   </div>
 
-  <div class="dashboard__panel">
-    <h2 class="dashboard__subhead">Watchlist preview</h2>
-    <app-watchlist-form (symbolAdded)="onSymbolAdded($event)" />
-    @if (watchlist().length) {
-      <ul class="dashboard__chips" aria-label="Watchlist symbols">
-        @for (symbol of watchlist(); track symbol) {
-          <li>
-            <app-watchlist-chip
-              [symbol]="symbol"
-              (removed)="onSymbolRemoved($event)"
-            ></app-watchlist-chip>
-          </li>
-        }
-      </ul>
-    } @else {
-      <p class="dashboard__hint">Add a symbol to see it listed here for this session.</p>
-    }
+  <!-- 4 stat cards — always show detail -->
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
+    <div class="rounded-lg border border-border bg-card p-5">
+      <p class="text-xs text-muted-foreground uppercase tracking-wide mb-2">Net Worth</p>
+      <p class="text-2xl font-bold text-foreground">{{ stats().netWorth }}</p>
+      <p class="text-xs mt-1 text-green-600">↗ {{ stats().netWorthChange }}</p>
+    </div>
+    <div class="rounded-lg border border-border bg-card p-5">
+      <p class="text-xs text-muted-foreground uppercase tracking-wide mb-2">Total Assets</p>
+      <p class="text-2xl font-bold text-foreground">{{ stats().totalAssets }}</p>
+      <p class="text-xs mt-1 text-muted-foreground">{{ stats().totalAssetsDetail }}</p>
+    </div>
+    <div class="rounded-lg border border-border bg-card p-5">
+      <p class="text-xs text-muted-foreground uppercase tracking-wide mb-2">Best Performer</p>
+      <p class="text-2xl font-bold text-foreground">{{ stats().bestPerformer }}</p>
+      <p class="text-xs mt-1 text-green-600">↗ {{ stats().bestPerformerChange }}</p>
+    </div>
+    <div class="rounded-lg border border-border bg-card p-5">
+      <p class="text-xs text-muted-foreground uppercase tracking-wide mb-2">Worst Performer</p>
+      <p class="text-2xl font-bold text-foreground">{{ stats().worstPerformer }}</p>
+      <p class="text-xs mt-1 text-destructive">↘ {{ stats().worstPerformerChange }}</p>
+    </div>
   </div>
 
-  <app-market-overview [watchlistSize]="watchlist().length" />
+  <!-- Charts row -->
+  <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+    <div class="lg:col-span-2">
+      <app-portfolio-chart [points]="chartPoints()" title="Portfolio Performance" />
+    </div>
+    <div>
+      <app-asset-allocation [slices]="allocationSlices()" />
+    </div>
+  </div>
+
+  <!-- Top movers -->
+  <app-top-movers [movers]="topMovers()" />
+
 </section>

@@ -13,10 +13,10 @@ Two-week sprint. Scoring is binary: all requirements met → 40 points, any sing
 
 - [x] **≥3 routes** — `app.routes.ts` has root redirect, `/dashboard` (lazy), wildcard 404. By end of sprint we'll grow this to 4 with `/connect`.
 - [x] **Lazy loading** — `loadChildren` for dashboard, `loadComponent` for 404. `/connect` will add a third.
-- [ ] **At least one route guard** — functional `walletConnectedGuard: CanActivateFn` at `src/app/core/guards/wallet-connected.guard.ts`. Returns `UrlTree` for redirects.
+- [x] **At least one route guard** — functional `walletConnectedGuard: CanActivateFn` at `src/app/core/guards/wallet-connected.guard.ts`. Returns `UrlTree` for redirects. Applied to `/portfolio`.
 - [x] **Signals in ≥2 components** — `DashboardPageComponent` (`signal` + `effect`), `MarketOverviewComponent` (`computed` over `resource()`).
 - [x] **≥2 services with `@Injectable()` + `inject()`** — `MarketDataService`, `ConsoleLoggerService`, `SnackBarNotifierService`, `GlobalErrorHandler` already meet this. `WalletService` will be the new showcase.
-- [/] **Sprint 2 diary entry** — file exists at `development-notes/KiriaIT/KiriaIT-sprint-2-2026-05-13.md`, retrospective gets filled in before the deadline.
+- [x] **Sprint 2 diary entry** — `development-notes/KiriaIT/KiriaIT-sprint-2-2026-05-13.md` — full retrospective written.
 
 ## Individual — Freemason-12
 

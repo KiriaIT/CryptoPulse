@@ -1,48 +1,59 @@
-import { Component, input, output, signal } from "@angular/core";
-type Trajectory = { value: number, diff: number }
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+  signal,
+} from '@angular/core';
+
+type Trajectory = { value: number; diff: number };
 
 @Component({
   selector: 'clicker-coin',
+  standalone: true,
   templateUrl: './clicker-coin.html',
   styles: `
-    .red {color: red}
-    .green {color: green}
-    `
+    .red { color: red }
+    .green { color: green }
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClickerCoin {
-  readonly amount = input<number>(0)
-  readonly increaseBy = input<number>(10)
-  readonly decreaseBy = input<number>(10)
-  readonly currentValue = signal<number>(this.amount())
-  readonly trajectory = signal<Trajectory>({ value: this.amount(), diff: 0 })
+  readonly amount = input<number>(0);
+  readonly increaseBy = input<number>(10);
+  readonly decreaseBy = input<number>(10);
 
-  amountChanged = output<Trajectory>()
+  protected readonly currentValue = signal<number>(0);
+  protected readonly trajectory = signal<Trajectory>({ value: 0, diff: 0 });
 
-  constructor() {
-    this.amountChanged.subscribe((val) => this.trajectory.set(val))
+  readonly amountChanged = output<Trajectory>();
+
+  private timerId: ReturnType<typeof setTimeout> | null = null;
+
+  protected onAmountIncrease(): void {
+    this.currentValue.update((v) => v + this.increaseBy());
+    const t: Trajectory = { value: this.currentValue(), diff: this.increaseBy() };
+    this.trajectory.set(t);
+    this.amountChanged.emit(t);
+
+    if (this.timerId !== null) clearTimeout(this.timerId);
+    const scheduleDecrease = (): void => {
+      this.timerId = setTimeout(() => {
+        if (this.currentValue() <= 0) {
+          this.currentValue.set(0);
+          return;
+        }
+        this.onAmountDecrease();
+        scheduleDecrease();
+      }, 2000);
+    };
+    scheduleDecrease();
   }
 
-  private timerId: number | null = null
-
-  protected onAmountIncrease() {
-    this.currentValue.update((value) => value += this.increaseBy())
-    this.amountChanged.emit({ value: this.currentValue(), diff: this.increaseBy() })
-
-    if (this.timerId !== null) clearTimeout(this.timerId)
-    const timedDeacrease = () => setTimeout(() => {
-      this.onAmountDecrease()
-      if (this.currentValue() <= 0 && this.timerId !== null) {
-        this.currentValue.set(0)
-        clearTimeout(this.timerId)
-      }
-      else timedDeacrease()
-    }, 2000)
-
-    this.timerId = timedDeacrease()
-  }
-
-  protected onAmountDecrease() {
-    this.currentValue.update((value) => value > 0 ? value -= this.decreaseBy() : value)
-    this.amountChanged.emit({ value: this.currentValue(), diff: this.decreaseBy() * -1 })
+  protected onAmountDecrease(): void {
+    this.currentValue.update((v) => (v > 0 ? v - this.decreaseBy() : 0));
+    const t: Trajectory = { value: this.currentValue(), diff: -this.decreaseBy() };
+    this.trajectory.set(t);
+    this.amountChanged.emit(t);
   }
 }

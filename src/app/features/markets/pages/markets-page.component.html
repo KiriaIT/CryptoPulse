@@ -1,0 +1,64 @@
+<section class="px-6 py-6">
+  <h1 class="text-2xl font-bold text-foreground">Market Explorer</h1>
+  <p class="text-sm text-muted-foreground mt-1">Discover and track cryptocurrency prices in real-time.</p>
+
+  <div class="mt-4 mb-4">
+    <input
+      type="text"
+      placeholder="Search coins..."
+      class="bg-secondary border border-border text-foreground placeholder:text-muted-foreground rounded-lg px-3 py-2 text-sm w-64 outline-none focus:ring-2 focus:ring-ring transition"
+      (input)="onFilterChange($any($event.target).value)"
+      aria-label="Search cryptocurrencies"
+    />
+  </div>
+
+  <div class="rounded-lg border border-border bg-card overflow-hidden">
+    <table class="w-full text-sm">
+      <thead class="bg-secondary text-muted-foreground text-left">
+        <tr>
+          <th class="px-4 py-3 font-medium">Name</th>
+          <th class="px-4 py-3 font-medium">Price</th>
+          <th class="px-4 py-3 font-medium">24h</th>
+          <th class="px-4 py-3 font-medium">7d</th>
+          <th class="px-4 py-3 font-medium">Market Cap</th>
+          <th class="px-4 py-3 font-medium">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (filteredMarkets().length === 0) {
+          <tr>
+            <td colspan="6" class="px-4 py-10 text-center text-muted-foreground">
+              No coins match your search.
+            </td>
+          </tr>
+        }
+        @for (coin of filteredMarkets(); track coin.symbol) {
+          <tr class="border-t border-border hover:bg-secondary/50 transition-colors">
+            <td class="px-4 py-3 flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-xs font-bold text-foreground" aria-hidden="true">
+                {{ coin.symbol.slice(0, 2) }}
+              </div>
+              <div>
+                <div class="font-medium text-foreground">{{ coin.name }}</div>
+                <div class="text-xs text-muted-foreground">{{ coin.symbol }}</div>
+              </div>
+            </td>
+            <td class="px-4 py-3 font-medium text-foreground">${{ coin.price | number: '1.2-2' }}</td>
+            <td class="px-4 py-3 font-medium" [class.text-green-600]="coin.change24h >= 0" [class.text-destructive]="coin.change24h < 0">
+              {{ coin.change24h >= 0 ? '+' : '' }}{{ coin.change24h | number: '1.2-2' }}%
+            </td>
+            <td class="px-4 py-3 font-medium" [class.text-green-600]="coin.change7d >= 0" [class.text-destructive]="coin.change7d < 0">
+              {{ coin.change7d >= 0 ? '+' : '' }}{{ coin.change7d | number: '1.2-2' }}%
+            </td>
+            <td class="px-4 py-3 text-muted-foreground">{{ coin.marketCap }}</td>
+            <td class="px-4 py-3">
+              <button class="bg-primary text-primary-foreground text-xs px-3 py-1.5 rounded-md hover:opacity-90 transition-opacity" [attr.aria-label]="'Trade ' + coin.name">
+                Trade
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
