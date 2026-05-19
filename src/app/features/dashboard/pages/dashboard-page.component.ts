@@ -1,71 +1,30 @@
-import { isPlatformBrowser } from '@angular/common';
-import {
-  afterNextRender,
-  ChangeDetectionStrategy,
-  Component,
-  effect,
-  inject,
-  PLATFORM_ID,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 
-import { STORAGE_KEYS } from '../../../core/constants/storage-keys.constants';
-import { APP_CONFIG } from '../../../core/tokens/app-config.token';
-import { WatchlistChip } from '../../../shared/ui/watchlist-chip/watchlist-chip';
-import { MarketOverviewComponent } from '../components/market-overview/market-overview.component';
-import { WatchlistFormComponent } from '../components/watchlist-form/watchlist-form.component';
-import { ClickerCoin } from '../../../shared/ui/clicker-coin/clicker-coin';
+import {
+  MOCK_DASHBOARD_STATS,
+  MOCK_PORTFOLIO_ALLOCATION,
+  MOCK_PORTFOLIO_CHART,
+  MOCK_TOP_MOVERS,
+} from '../../../core/constants/mock-portfolio.constants';
+import { PortfolioChartComponent } from '../components/portfolio-chart/portfolio-chart.component';
+import { AssetAllocationComponent } from '../components/asset-allocation/asset-allocation.component';
+import { TopMoversComponent } from '../components/top-movers/top-movers.component';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [MarketOverviewComponent, WatchlistChip, WatchlistFormComponent, ClickerCoin],
+  standalone: true,
+  imports: [
+    PortfolioChartComponent,
+    AssetAllocationComponent,
+    TopMoversComponent,
+  ],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardPageComponent {
-  protected readonly appName = inject(APP_CONFIG).appName;
-  private readonly platformId = inject(PLATFORM_ID);
-  private readonly storageReady = signal(false);
-  readonly watchlist = signal<string[]>([]);
-
-  constructor() {
-    afterNextRender(() => {
-      if (!isPlatformBrowser(this.platformId)) {
-        this.storageReady.set(true);
-        return;
-      }
-      const raw = sessionStorage.getItem(STORAGE_KEYS.WATCHLIST_PREVIEW);
-      if (raw) {
-        try {
-          const parsed: unknown = JSON.parse(raw);
-          if (this.isStringArray(parsed)) {
-            this.watchlist.set(parsed);
-          }
-        } catch {
-          sessionStorage.removeItem(STORAGE_KEYS.WATCHLIST_PREVIEW);
-        }
-      }
-      this.storageReady.set(true);
-    });
-
-    effect(() => {
-      if (!this.storageReady() || !isPlatformBrowser(this.platformId)) {
-        return;
-      }
-      sessionStorage.setItem(STORAGE_KEYS.WATCHLIST_PREVIEW, JSON.stringify(this.watchlist()));
-    });
-  }
-
-  protected onSymbolAdded(symbol: string): void {
-    this.watchlist.update((list) => (list.includes(symbol) ? list : [...list, symbol]));
-  }
-
-  protected onSymbolRemoved(symbol: string): void {
-    this.watchlist.update((list) => list.filter((s) => s !== symbol));
-  }
-
-  private isStringArray(value: unknown): value is string[] {
-    return Array.isArray(value) && value.every((item) => typeof item === 'string');
-  }
+  protected readonly stats = computed(() => MOCK_DASHBOARD_STATS);
+  protected readonly chartPoints = computed(() => MOCK_PORTFOLIO_CHART);
+  protected readonly allocationSlices = computed(() => MOCK_PORTFOLIO_ALLOCATION);
+  protected readonly topMovers = computed(() => MOCK_TOP_MOVERS);
 }

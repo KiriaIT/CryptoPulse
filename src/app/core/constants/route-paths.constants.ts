@@ -1,6 +1,11 @@
 export const ROUTE_PATHS = {
   ROOT: '',
   DASHBOARD: 'dashboard',
+  MARKETS: 'markets',
+  PORTFOLIO: 'portfolio',
+  CONNECT: 'connect',
+  ABOUT: 'about',
+  SETTINGS: 'settings',
   WILDCARD: '**',
 } as const;
 

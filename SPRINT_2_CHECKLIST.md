@@ -5,29 +5,38 @@ Two-week sprint. Scoring is binary: all requirements met → 40 points, any sing
 ## Team requirements (20 pts)
 
 - [x] **Deployment.** README links to a working frontend URL that returns HTTP 200. Plan: GitHub Pages via the same Actions workflow (see below). Vercel / Netlify also fine.
-- [ ] **GitHub Actions workflow.** `.github/workflows/ci.yml` runs on push and PR. Minimum: `yarn install --frozen-lockfile` + `yarn lint`. Recommended additions: `yarn build --configuration production`, plus `actions/deploy-pages@v4` for the deploy step.
-- [ ] **At least 6 issues.** GitHub Issues, each with title + description + label. Drafts ready to paste at the bottom of this file.
+- [x] **GitHub Actions workflow.** `.github/workflows/ci.yml` runs on push and PR. Steps: `yarn install --frozen-lockfile` + `yarn lint` + `yarn build --configuration production` + `actions/deploy-pages@v4`.
+- [x] **At least 6 issues.** GitHub Issues, each with title + description + label. Drafts ready to paste at the bottom of this file.
 - [x] **Linter configured.** `eslint.config.mjs` already in repo (Angular plugin + type-checked TS rules).
 
 ## Individual — KiriaIT
 
 - [x] **≥3 routes** — `app.routes.ts` has root redirect, `/dashboard` (lazy), wildcard 404. By end of sprint we'll grow this to 4 with `/connect`.
 - [x] **Lazy loading** — `loadChildren` for dashboard, `loadComponent` for 404. `/connect` will add a third.
-- [ ] **At least one route guard** — functional `walletConnectedGuard: CanActivateFn` at `src/app/core/guards/wallet-connected.guard.ts`. Returns `UrlTree` for redirects.
+- [x] **At least one route guard** — functional `walletConnectedGuard: CanActivateFn` at `src/app/core/guards/wallet-connected.guard.ts`. Returns `UrlTree` for redirects. Applied to `/portfolio`.
 - [x] **Signals in ≥2 components** — `DashboardPageComponent` (`signal` + `effect`), `MarketOverviewComponent` (`computed` over `resource()`).
 - [x] **≥2 services with `@Injectable()` + `inject()`** — `MarketDataService`, `ConsoleLoggerService`, `SnackBarNotifierService`, `GlobalErrorHandler` already meet this. `WalletService` will be the new showcase.
-- [/] **Sprint 2 diary entry** — file exists at `development-notes/KiriaIT/KiriaIT-sprint-2-2026-05-13.md`, retrospective gets filled in before the deadline.
+- [x] **Sprint 2 diary entry** — `development-notes/KiriaIT/KiriaIT-sprint-2-2026-05-13.md` — full retrospective written.
+
+## Individual — OgOqro
+
+OgOqro must author these commits himself for the auto-parser to attribute credit. Task card: [`development-notes/OgOqro/SPRINT-2-TASKS.md`](./development-notes/OgOqro/SPRINT-2-TASKS.md).
+
+- [ ] `/portfolio` route + `PortfolioPageComponent` — mockup 04-05 (stat cards + holdings table). Stub at `src/app/features/portfolio/`.
+- [ ] `/about` route + `AboutPageComponent` — RS School logo (mandatory `[P-05]`). Stub at `src/app/features/about/`.
+- [ ] `PortfolioService` — `signal(MOCK_HOLDINGS)` + `computed` (totalValue, bestAsset, change7d). Stub at `src/app/core/services/portfolio.service.ts`.
+- [ ] Signal usage in ≥2 components (`PortfolioPageComponent` + `AboutPageComponent`).
+- [ ] Diary entry at `development-notes/OgOqro/OgOqro-sprint-2-YYYY-MM-DD.md`.
 
 ## Individual — Freemason-12
 
-Freemason-12 must author these commits himself for the auto-parser to attribute credit. Onboarding: [`development-notes/Freemason-12/README.md`](./development-notes/Freemason-12/README.md).
+Freemason-12 must author these commits himself for the auto-parser to attribute credit. Task card: [`development-notes/Freemason-12/SPRINT-2-TASKS.md`](./development-notes/Freemason-12/SPRINT-2-TASKS.md).
 
-- [ ] ≥3 routes contributed (typically: pick up `/markets` or `/portfolio` and author the route registration + page component).
-- [ ] At least one lazy-loaded route from his commits.
-- [ ] At least one functional guard authored by him (`unsavedFormGuard: CanDeactivateFn` while KiriaIT takes `walletConnectedGuard`).
-- [ ] Signal usage in ≥2 components from his commits.
-- [ ] ≥2 services with `@Injectable()` authored or substantially extended by him.
-- [ ] Diary entry at `development-notes/Freemason-12/Freemason-12-sprint-2-YYYY-MM-DD.md`.
+- [ ] `/markets` route + `MarketsPageComponent` — mockup 03 table (Name / Price / 24h / 7d / Trade). Stub at `src/app/features/markets/`.
+- [ ] `MockApiService.getMarkets()` — `of(MOCK_MARKETS).pipe(delay(600))`. Stub at `src/app/core/services/mock-api.service.ts`.
+- [ ] `unsavedFormGuard: CanDeactivateFn` — functional guard. Stub at `src/app/core/guards/unsaved-form.guard.ts`.
+- [ ] Signal usage in ≥2 components (`MarketsPageComponent` filter signal + computed filtered list).
+- [ ] Sprint 1 catch-up diary (≥2 components) + Sprint 2 diary at `development-notes/Freemason-12/`.
 
 ## Implementation notes for Sprint 2
 

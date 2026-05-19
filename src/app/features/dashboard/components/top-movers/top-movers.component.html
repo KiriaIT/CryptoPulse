@@ -1,0 +1,25 @@
+<div class="rounded-lg border border-border bg-card p-5">
+  <h2 class="text-base font-semibold text-foreground mb-4">Top Movers</h2>
+  <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    @for (mover of movers(); track mover.symbol) {
+      <div class="rounded-lg border border-border bg-background p-4 relative">
+        <div
+          class="absolute top-3 right-3 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
+          [class.bg-green-100]="mover.changePct >= 0"
+          [class.text-green-700]="mover.changePct >= 0"
+          [class.bg-red-100]="mover.changePct < 0"
+          [class.text-red-600]="mover.changePct < 0"
+          aria-hidden="true"
+        >{{ mover.changePct >= 0 ? '↗' : '↘' }}</div>
+        <p class="font-bold text-sm text-foreground">{{ mover.symbol }}</p>
+        <p class="text-xs text-muted-foreground mb-2">{{ mover.name }}</p>
+        <p class="font-semibold text-sm text-foreground">{{ mover.price }}</p>
+        <p
+          class="text-xs font-medium mt-0.5"
+          [class.text-green-600]="mover.changePct >= 0"
+          [class.text-red-500]="mover.changePct < 0"
+        >{{ mover.changePct >= 0 ? '+' : '' }}{{ mover.changePct }}%</p>
+      </div>
+    }
+  </div>
+</div>

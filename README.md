@@ -52,44 +52,10 @@ Public Binance Testnet endpoints (market data) remain the real data source. HMAC
 
 Remaining work by sprint. Full requirements: [`SPRINT_1_CHECKLIST.md`](./SPRINT_1_CHECKLIST.md) … [`SPRINT_4_CHECKLIST.md`](./SPRINT_4_CHECKLIST.md), [`PROJECT_TRACKER.md`](./PROJECT_TRACKER.md).
 
-<<<<<<< HEAD
-- **Sprint 1** — Project setup, standalone components, signal-based APIs. Notes: [KiriaIT](./development-notes/KiriaIT/KiriaIT-sprint-1-2026-05-11.md), [OgOqro](./development-notes/OgOqro/OgOqro-sprint-1-2026-05-14.md) (historical). **Freemason-12:** add your Sprint 1 diary under [`development-notes/Freemason-12/`](./development-notes/Freemason-12/) — see onboarding README there.
-- **Sprint 2** — Routing, lazy loading, guards, signals, DI. In progress. Notes: [KiriaIT](./development-notes/KiriaIT/KiriaIT-sprint-2-2026-05-13.md). **Freemason-12:** Sprint 2 diary + individual items per [`SPRINT_2_CHECKLIST.md`](./SPRINT_2_CHECKLIST.md).
+- **Sprint 1** — Project setup, standalone components, signal-based APIs. Diaries: [KiriaIT](./development-notes/KiriaIT/KiriaIT-sprint-1-2026-05-11.md) · [OgOqro](./development-notes/OgOqro/OgOqro-sprint-1-2026-05-14.md) · [Freemason-12](./development-notes/Freemason-12/Freemason-12-sprint-1-2026-05-18.md).
+- **Sprint 2** — Routing, lazy loading, guards, signals, DI. Diaries: [KiriaIT](./development-notes/KiriaIT/KiriaIT-sprint-2-2026-05-13.md) · OgOqro + Freemason-12: see task cards in `development-notes/<username>/SPRINT-2-TASKS.md`.
 - **Sprint 3** — Directives, pipes, reactive forms. Upcoming.
 - **Sprint 4** — HTTP, RxJS, testing. Upcoming.
-=======
-### Sprint 1
->>>>>>> 32e9a5e (feat: add WatchlistChip component to dashboard page imports and updated files for new member)
-
-- Standalone component with `input()` / `output()` merged to `main`.
-- Sprint 1 diary in [`development-notes/`](./development-notes/) (no squash-merge on diary PRs).
-
-### Sprint 2 (in progress)
-
-- At least 6 GitHub Issues (title, description, sprint label).
-- GitHub: collaborator Write access, branch protection on `main`, labels, Project board.
-- `WalletService` — signals, computed, effect, RxJS connect, `localStorage`.
-- `/connect` lazy route and connect UI.
-- `walletConnectedGuard` and `unsavedFormGuard` (functional guards).
-- More lazy routes (e.g. `/markets`, `/portfolio`).
-- Sprint 2 diaries.
-
-### Sprint 3
-
-- Custom directive or pipe with real template usage.
-- Reactive forms — ≥3 fields, ≥2 validator types, inline errors, working submit.
-- `InjectionToken` / custom provider.
-- Markets, Portfolio, Settings feature pages.
-- Sprint 3 diaries.
-
-### Sprint 4
-
-- ~1 min demo video (404, loading, error) linked from README.
-- `MockApiService` — HttpClient GET + mocked POST/PUT/DELETE.
-- `loadingInterceptor` and `errorInterceptor`.
-- ≥5 Vitest specs per contributor.
-- PR code reviews.
-- Sprint 4 diaries.
 
 ## Deployment
 

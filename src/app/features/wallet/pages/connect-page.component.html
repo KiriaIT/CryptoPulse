@@ -1,0 +1,49 @@
+<!-- Connect Wallet page — matches pictures/08-wallet-connect-modal.png -->
+<div class="min-h-screen flex items-center justify-center bg-background px-4">
+  <div class="bg-card border border-border rounded-xl shadow-sm w-full max-w-md p-6">
+
+    <!-- Header -->
+    <h1 class="text-xl font-semibold text-foreground">Connect Your Wallet</h1>
+    <p class="text-sm text-muted-foreground mt-1">Choose a wallet to connect to CryptoPulse</p>
+
+    <!-- Error -->
+    @if (errorMessage()) {
+      <div class="mt-4 flex items-center gap-2 text-sm text-destructive bg-red-50 dark:bg-red-950/20 rounded-lg px-3 py-2.5" role="alert">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    <!-- Provider list -->
+    <ul class="mt-5 flex flex-col gap-2" role="list" aria-label="Wallet providers">
+      @for (provider of providers; track provider.id) {
+        <li>
+          <button
+            class="w-full flex items-center justify-between px-4 py-3.5 rounded-lg border transition-colors text-left group"
+            [class.border-primary]="connectingId() === provider.id"
+            [class.border-border]="connectingId() !== provider.id"
+            [class.bg-secondary]="connectingId() === provider.id"
+            [class.opacity-50]="status() === 'connecting' && connectingId() !== provider.id"
+            [attr.aria-label]="'Connect with ' + provider.name"
+            [disabled]="status() === 'connecting'"
+            (click)="onProviderClick(provider)"
+          >
+            <div class="flex items-center gap-3">
+              <span class="text-xl w-8 text-center" aria-hidden="true">{{ provider.icon }}</span>
+              <div>
+                <p class="text-sm font-medium text-foreground">{{ provider.name }}</p>
+                <p class="text-xs text-muted-foreground">{{ provider.subtitle }}</p>
+              </div>
+            </div>
+            <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors" aria-hidden="true">
+              @if (connectingId() === provider.id) { ⏳ } @else { → }
+            </span>
+          </button>
+        </li>
+      }
+    </ul>
+
+    <p class="mt-5 text-xs text-center text-muted-foreground">
+      By connecting, you agree to our Terms of Service and Privacy Policy.
+    </p>
+  </div>
+</div>
