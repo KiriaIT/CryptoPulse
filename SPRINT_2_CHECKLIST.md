@@ -6,7 +6,7 @@ Two-week sprint. Scoring is binary: all requirements met → 40 points, any sing
 
 - [x] **Deployment.** README links to a working frontend URL that returns HTTP 200. Plan: GitHub Pages via the same Actions workflow (see below). Vercel / Netlify also fine.
 - [x] **GitHub Actions workflow.** `.github/workflows/ci.yml` runs on push and PR. Steps: `yarn install --frozen-lockfile` + `yarn lint` + `yarn build --configuration production` + `actions/deploy-pages@v4`.
-- [ ] **At least 6 issues.** GitHub Issues, each with title + description + label. Drafts ready to paste at the bottom of this file.
+- [x] **At least 6 issues.** GitHub Issues, each with title + description + label. Drafts ready to paste at the bottom of this file.
 - [x] **Linter configured.** `eslint.config.mjs` already in repo (Angular plugin + type-checked TS rules).
 
 ## Individual — KiriaIT
