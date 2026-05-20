@@ -11,6 +11,8 @@ const TEST_CONFIG: AppConfig = {
   production: false,
   apiBaseUrl: 'http://localhost:0/api',
   appName: 'Crypto Pulse (test)',
+  supabaseUrl: 'http://localhost:0',
+  supabaseAnonKey: 'test-anon-key',
 };
 
 describe('App', () => {

@@ -4,6 +4,8 @@ export interface AppConfig {
   readonly production: boolean;
   readonly apiBaseUrl: string;
   readonly appName: string;
+  readonly supabaseUrl: string;
+  readonly supabaseAnonKey: string;
 }
 
 export const APP_CONFIG = new InjectionToken<AppConfig>('APP_CONFIG');

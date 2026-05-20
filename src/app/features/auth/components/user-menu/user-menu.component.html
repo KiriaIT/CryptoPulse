@@ -1,0 +1,64 @@
+@if (isAuthed()) {
+  <div class="relative">
+    <button
+      class="flex items-center gap-2 bg-primary text-primary-foreground text-sm font-medium px-3 py-2 rounded-lg hover:opacity-90 transition-opacity"
+      (click)="toggle()"
+      [attr.aria-expanded]="open()"
+      aria-label="Account menu"
+    >
+      <lucide-icon [img]="icons.User" [size]="15" aria-hidden="true" />
+      {{ displayLabel() }}
+      <lucide-icon [img]="icons.ChevronDown" [size]="13" aria-hidden="true" />
+    </button>
+
+    @if (open()) {
+      <!-- click-outside backdrop -->
+      <div class="fixed inset-0 z-40" (click)="close()" aria-hidden="true"></div>
+
+      <div
+        class="absolute right-0 top-11 w-64 bg-card border border-border rounded-xl shadow-lg z-50"
+        role="menu"
+      >
+        <div class="px-4 py-3 border-b border-border">
+          <p class="text-sm font-semibold text-foreground truncate">{{ displayLabel() }}</p>
+          <p class="text-xs text-muted-foreground truncate">{{ user()?.email }}</p>
+        </div>
+
+        @if (profile(); as p) {
+          <div class="px-4 py-3 border-b border-border">
+            <p class="text-xs text-muted-foreground uppercase tracking-wide">Virtual balance</p>
+            <p class="text-base font-bold text-foreground">${{ p.cashBalanceUsd }}</p>
+          </div>
+        }
+
+        <a
+          [routerLink]="portfolioPath"
+          (click)="close()"
+          class="flex items-center gap-2 px-4 py-2.5 text-sm text-foreground hover:bg-secondary transition-colors"
+          role="menuitem"
+        >
+          <lucide-icon [img]="icons.Wallet" [size]="15" aria-hidden="true" />
+          My Portfolio
+        </a>
+        <button
+          type="button"
+          class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-destructive hover:bg-secondary transition-colors text-left"
+          (click)="signOut()"
+          role="menuitem"
+        >
+          <lucide-icon [img]="icons.LogOut" [size]="15" aria-hidden="true" />
+          Sign out
+        </button>
+      </div>
+    }
+  </div>
+} @else {
+  <a
+    [routerLink]="loginPath"
+    class="flex items-center gap-2 border border-border bg-card text-foreground text-sm font-medium px-3 py-2 rounded-lg hover:bg-secondary transition-colors"
+    aria-label="Sign in"
+  >
+    <lucide-icon [img]="icons.LogIn" [size]="15" aria-hidden="true" />
+    Sign in
+  </a>
+}

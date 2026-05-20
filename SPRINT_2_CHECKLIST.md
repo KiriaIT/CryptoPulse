@@ -24,7 +24,7 @@ OgOqro must author these commits himself for the auto-parser to attribute credit
 
 - [ ] `/portfolio` route + `PortfolioPageComponent` — mockup 04-05 (stat cards + holdings table). Stub at `src/app/features/portfolio/`.
 - [ ] `/about` route + `AboutPageComponent` — RS School logo (mandatory `[P-05]`). Stub at `src/app/features/about/`.
-- [ ] `PortfolioService` — `signal(MOCK_HOLDINGS)` + `computed` (totalValue, bestAsset, change7d). Stub at `src/app/core/services/portfolio.service.ts`.
+- [ ] `PortfolioService` — `PORTFOLIO_SEED` amounts + live prices from `MarketDataService` + `computed` (totalValue, bestAsset, change7d). Stub at `src/app/core/services/portfolio.service.ts`.
 - [ ] Signal usage in ≥2 components (`PortfolioPageComponent` + `AboutPageComponent`).
 - [ ] Diary entry at `development-notes/OgOqro/OgOqro-sprint-2-YYYY-MM-DD.md`.
 
@@ -33,7 +33,7 @@ OgOqro must author these commits himself for the auto-parser to attribute credit
 Freemason-12 must author these commits himself for the auto-parser to attribute credit. Task card: [`development-notes/Freemason-12/SPRINT-2-TASKS.md`](./development-notes/Freemason-12/SPRINT-2-TASKS.md).
 
 - [ ] `/markets` route + `MarketsPageComponent` — mockup 03 table (Name / Price / 24h / 7d / Trade). Stub at `src/app/features/markets/`.
-- [ ] `MockApiService.getMarkets()` — `of(MOCK_MARKETS).pipe(delay(600))`. Stub at `src/app/core/services/mock-api.service.ts`.
+- [ ] Live market table via `MarketDataService.getTickerSnapshot()` — map to display rows; loading + error states `[O-12]`. Do **not** use `MockApiService` / `MOCK_MARKETS`.
 - [ ] `unsavedFormGuard: CanDeactivateFn` — functional guard. Stub at `src/app/core/guards/unsaved-form.guard.ts`.
 - [ ] Signal usage in ≥2 components (`MarketsPageComponent` filter signal + computed filtered list).
 - [ ] Sprint 1 catch-up diary (≥2 components) + Sprint 2 diary at `development-notes/Freemason-12/`.

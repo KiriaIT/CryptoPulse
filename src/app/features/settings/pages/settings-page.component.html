@@ -1,0 +1,39 @@
+<section class="px-6 py-6 max-w-lg">
+  <h1 class="text-2xl font-bold text-foreground">{{ labels.TITLE }}</h1>
+  <p class="text-sm text-muted-foreground mt-1">{{ labels.SUBTITLE }}</p>
+
+  <div class="mt-6 rounded-lg border border-border bg-card p-5">
+    <h2 class="text-sm font-semibold text-foreground">{{ labels.ACCOUNT_HEADING }}</h2>
+
+    @if (isAuthed()) {
+      <dl class="mt-4 flex flex-col gap-4">
+        <div>
+          <dt class="text-xs text-muted-foreground uppercase tracking-wide">{{ labels.EMAIL }}</dt>
+          <dd class="text-sm font-medium text-foreground mt-1">{{ user()?.email ?? '—' }}</dd>
+        </div>
+        <div>
+          <dt class="text-xs text-muted-foreground uppercase tracking-wide">{{ labels.DISPLAY_NAME }}</dt>
+          <dd class="text-sm font-medium text-foreground mt-1">
+            {{ profile()?.displayName ?? '—' }}
+          </dd>
+        </div>
+        <div>
+          <dt class="text-xs text-muted-foreground uppercase tracking-wide">{{ labels.VIRTUAL_BALANCE }}</dt>
+          <dd class="text-xl font-bold text-foreground mt-1">{{ cashFormatted() }}</dd>
+          <p class="text-xs text-muted-foreground mt-1">{{ labels.VIRTUAL_BALANCE_HINT }}</p>
+        </div>
+      </dl>
+      @if (!profile()) {
+        <p class="mt-4 text-sm text-destructive" role="alert">{{ labels.NO_PROFILE }}</p>
+      }
+    } @else {
+      <p class="mt-4 text-sm text-muted-foreground">{{ labels.NOT_SIGNED_IN }}</p>
+      <a
+        [routerLink]="loginPath"
+        class="inline-block mt-3 text-sm font-medium text-primary hover:underline"
+      >
+        Sign in
+      </a>
+    }
+  </div>
+</section>

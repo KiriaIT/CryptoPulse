@@ -6,12 +6,22 @@
     <p class="text-sm text-muted-foreground mt-0.5">Welcome back! Here's your portfolio overview.</p>
   </div>
 
-  <!-- 4 stat cards — always show detail -->
-  <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
+  <!-- Stat cards -->
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-5">
     <div class="rounded-lg border border-border bg-card p-5">
       <p class="text-xs text-muted-foreground uppercase tracking-wide mb-2">Net Worth</p>
       <p class="text-2xl font-bold text-foreground">{{ stats().netWorth }}</p>
       <p class="text-xs mt-1 text-green-600">↗ {{ stats().netWorthChange }}</p>
+    </div>
+    <div class="rounded-lg border border-border bg-card p-5">
+      <p class="text-xs text-muted-foreground uppercase tracking-wide mb-2">{{ cashLabels.LABEL }}</p>
+      @if (isAuthed() && profile()) {
+        <p class="text-2xl font-bold text-foreground">{{ cashValue() }}</p>
+        <p class="text-xs mt-1 text-muted-foreground">{{ cashDetail() }}</p>
+      } @else {
+        <p class="text-2xl font-bold text-foreground">{{ cashValue() }}</p>
+        <a [routerLink]="loginPath" class="text-xs mt-1 text-primary hover:underline">{{ cashDetail() }}</a>
+      }
     </div>
     <div class="rounded-lg border border-border bg-card p-5">
       <p class="text-xs text-muted-foreground uppercase tracking-wide mb-2">Total Assets</p>

@@ -1,10 +1,20 @@
 import { Routes } from '@angular/router';
 
 import { ROUTE_PATHS } from './core/constants/route-paths.constants';
-import { walletConnectedGuard } from './core/guards/wallet-connected.guard';
+import { authGuard } from './core/guards/auth.guard';
 import { ShellComponent } from './layout/shell/shell.component';
 
 export const routes: Routes = [
+  {
+    path: ROUTE_PATHS.LOGIN,
+    loadChildren: () =>
+      import('./features/auth/auth.routes').then((m) => m.LOGIN_ROUTES),
+  },
+  {
+    path: ROUTE_PATHS.REGISTER,
+    loadChildren: () =>
+      import('./features/auth/auth.routes').then((m) => m.REGISTER_ROUTES),
+  },
   {
     path: ROUTE_PATHS.ROOT,
     component: ShellComponent,
@@ -26,7 +36,7 @@ export const routes: Routes = [
       },
       {
         path: ROUTE_PATHS.PORTFOLIO,
-        canActivate: [walletConnectedGuard],
+        canActivate: [authGuard],
         loadChildren: () =>
           import('./features/portfolio/portfolio.routes').then((m) => m.PORTFOLIO_ROUTES),
       },
@@ -37,6 +47,7 @@ export const routes: Routes = [
       },
       {
         path: ROUTE_PATHS.SETTINGS,
+        canActivate: [authGuard],
         loadChildren: () =>
           import('./features/settings/settings.routes').then((m) => m.SETTINGS_ROUTES),
       },

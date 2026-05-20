@@ -6,6 +6,8 @@ export const ROUTE_PATHS = {
   CONNECT: 'connect',
   ABOUT: 'about',
   SETTINGS: 'settings',
+  LOGIN: 'login',
+  REGISTER: 'register',
   WILDCARD: '**',
 } as const;
 
