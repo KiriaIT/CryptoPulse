@@ -1,0 +1,118 @@
+<div class="min-h-screen flex items-center justify-center bg-background px-4 py-10">
+  <form
+    class="bg-card border border-border rounded-xl shadow-sm w-full max-w-md p-6 flex flex-col gap-4"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    novalidate
+  >
+    <div>
+      <h1 class="text-xl font-semibold text-foreground">Create your account</h1>
+      <p class="text-sm text-muted-foreground mt-1">Start tracking your crypto portfolio in seconds.</p>
+    </div>
+
+    <label class="flex flex-col gap-1.5">
+      <span class="text-xs font-medium text-muted-foreground uppercase tracking-wide">Display name</span>
+      <input
+        type="text"
+        formControlName="displayName"
+        autocomplete="nickname"
+        class="bg-secondary border border-border text-foreground placeholder:text-muted-foreground rounded-lg px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring transition"
+        placeholder="Satoshi"
+      />
+      @if (form.controls.displayName.touched && form.controls.displayName.invalid) {
+        <span class="text-xs text-destructive">
+          @if (form.controls.displayName.errors?.['required']) {
+            {{ messages.DISPLAY_NAME_REQUIRED }}
+          } @else if (form.controls.displayName.errors?.['minlength']) {
+            {{ messages.DISPLAY_NAME_MIN }}
+          } @else if (form.controls.displayName.errors?.['maxlength']) {
+            {{ messages.DISPLAY_NAME_MAX }}
+          } @else {
+            {{ messages.DISPLAY_NAME_PATTERN }}
+          }
+        </span>
+      }
+    </label>
+
+    <label class="flex flex-col gap-1.5">
+      <span class="text-xs font-medium text-muted-foreground uppercase tracking-wide">Email</span>
+      <input
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+        class="bg-secondary border border-border text-foreground placeholder:text-muted-foreground rounded-lg px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring transition"
+        placeholder="you@crypto-pulse.app"
+      />
+      @if (form.controls.email.touched && form.controls.email.invalid) {
+        <span class="text-xs text-destructive">
+          @if (form.controls.email.errors?.['required']) {
+            {{ messages.EMAIL_REQUIRED }}
+          } @else {
+            {{ messages.EMAIL_INVALID }}
+          }
+        </span>
+      }
+    </label>
+
+    <label class="flex flex-col gap-1.5">
+      <span class="text-xs font-medium text-muted-foreground uppercase tracking-wide">Password</span>
+      <input
+        type="password"
+        formControlName="password"
+        autocomplete="new-password"
+        class="bg-secondary border border-border text-foreground placeholder:text-muted-foreground rounded-lg px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring transition"
+        placeholder="At least 8 characters"
+      />
+      @if (form.controls.password.touched && form.controls.password.invalid) {
+        <span class="text-xs text-destructive">
+          @if (form.controls.password.errors?.['required']) {
+            {{ messages.PASSWORD_REQUIRED }}
+          } @else if (form.controls.password.errors?.['minlength']) {
+            {{ messages.PASSWORD_MIN }}
+          } @else {
+            {{ messages.PASSWORD_PATTERN }}
+          }
+        </span>
+      }
+    </label>
+
+    <label class="flex flex-col gap-1.5">
+      <span class="text-xs font-medium text-muted-foreground uppercase tracking-wide">Confirm password</span>
+      <input
+        type="password"
+        formControlName="confirmPassword"
+        autocomplete="new-password"
+        class="bg-secondary border border-border text-foreground placeholder:text-muted-foreground rounded-lg px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring transition"
+        placeholder="Repeat your password"
+      />
+      @if (form.controls.confirmPassword.touched && form.controls.confirmPassword.invalid) {
+        <span class="text-xs text-destructive">
+          @if (form.controls.confirmPassword.errors?.['required']) {
+            {{ messages.PASSWORD_CONFIRM_REQUIRED }}
+          } @else if (form.controls.confirmPassword.errors?.['passwordMismatch']) {
+            {{ messages.PASSWORD_MISMATCH }}
+          }
+        </span>
+      }
+    </label>
+
+    <button
+      type="submit"
+      class="mt-2 flex items-center justify-center gap-2 bg-primary text-primary-foreground text-sm font-medium px-4 py-2.5 rounded-lg hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed transition-opacity"
+      [disabled]="submitting()"
+    >
+      @if (submitting()) {
+        <lucide-icon [img]="icons.Loader" [size]="15" class="animate-spin" aria-hidden="true" />
+        Creating account…
+      } @else {
+        <lucide-icon [img]="icons.UserPlus" [size]="15" aria-hidden="true" />
+        Create account
+      }
+    </button>
+
+    <p class="text-xs text-center text-muted-foreground">
+      Already have an account?
+      <a [routerLink]="loginPath" class="text-foreground hover:underline ml-1">Sign in</a>
+    </p>
+  </form>
+</div>

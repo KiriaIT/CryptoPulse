@@ -1,0 +1,72 @@
+<div class="min-h-screen flex items-center justify-center bg-background px-4">
+  <form
+    class="bg-card border border-border rounded-xl shadow-sm w-full max-w-md p-6 flex flex-col gap-4"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    novalidate
+  >
+    <div>
+      <h1 class="text-xl font-semibold text-foreground">Welcome back</h1>
+      <p class="text-sm text-muted-foreground mt-1">Sign in to your Crypto Pulse account.</p>
+    </div>
+
+    <label class="flex flex-col gap-1.5">
+      <span class="text-xs font-medium text-muted-foreground uppercase tracking-wide">Email</span>
+      <input
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+        class="bg-secondary border border-border text-foreground placeholder:text-muted-foreground rounded-lg px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring transition"
+        placeholder="you@crypto-pulse.app"
+      />
+      @if (form.controls.email.touched && form.controls.email.invalid) {
+        <span class="text-xs text-destructive">
+          @if (form.controls.email.errors?.['required']) {
+            {{ messages.EMAIL_REQUIRED }}
+          } @else {
+            {{ messages.EMAIL_INVALID }}
+          }
+        </span>
+      }
+    </label>
+
+    <label class="flex flex-col gap-1.5">
+      <span class="text-xs font-medium text-muted-foreground uppercase tracking-wide">Password</span>
+      <input
+        type="password"
+        formControlName="password"
+        autocomplete="current-password"
+        class="bg-secondary border border-border text-foreground placeholder:text-muted-foreground rounded-lg px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring transition"
+        placeholder="••••••••"
+      />
+      @if (form.controls.password.touched && form.controls.password.invalid) {
+        <span class="text-xs text-destructive">
+          @if (form.controls.password.errors?.['required']) {
+            {{ messages.PASSWORD_REQUIRED }}
+          } @else {
+            {{ messages.PASSWORD_MIN }}
+          }
+        </span>
+      }
+    </label>
+
+    <button
+      type="submit"
+      class="mt-2 flex items-center justify-center gap-2 bg-primary text-primary-foreground text-sm font-medium px-4 py-2.5 rounded-lg hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed transition-opacity"
+      [disabled]="submitting()"
+    >
+      @if (submitting()) {
+        <lucide-icon [img]="icons.Loader" [size]="15" class="animate-spin" aria-hidden="true" />
+        Signing in…
+      } @else {
+        <lucide-icon [img]="icons.LogIn" [size]="15" aria-hidden="true" />
+        Sign in
+      }
+    </button>
+
+    <p class="text-xs text-center text-muted-foreground">
+      Don't have an account?
+      <a [routerLink]="registerPath" class="text-foreground hover:underline ml-1">Create one</a>
+    </p>
+  </form>
+</div>

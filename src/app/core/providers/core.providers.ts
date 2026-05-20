@@ -5,7 +5,7 @@ import { LoggerService } from '../abstractions/logger.abstract';
 import { NotifierService } from '../abstractions/notifier.abstract';
 import { ConsoleLoggerService } from '../services/console-logger.service';
 import { GlobalErrorHandler } from '../services/global-error-handler.service';
-import { SnackBarNotifierService } from '../services/snack-bar-notifier.service';
+import { ToastService } from '../services/toast.service';
 import { APP_CONFIG, AppConfig } from '../tokens/app-config.token';
 import { DEFAULT_WALLET_PROVIDERS, WALLET_CONFIG } from '../tokens/wallet-config.token';
 
@@ -14,7 +14,7 @@ export function provideCore(config: AppConfig): EnvironmentProviders {
     provideAnimationsAsync(),
     { provide: APP_CONFIG, useValue: config },
     { provide: LoggerService, useExisting: ConsoleLoggerService },
-    { provide: NotifierService, useExisting: SnackBarNotifierService },
+      { provide: NotifierService, useExisting: ToastService },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     { provide: WALLET_CONFIG, useValue: DEFAULT_WALLET_PROVIDERS },
   ]);

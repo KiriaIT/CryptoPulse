@@ -12,13 +12,14 @@ import {
   Settings,
   Sun,
   TrendingUp,
+  Wallet,
   X,
 } from 'lucide-angular';
 
 import { APP_CONFIG } from '../../core/tokens/app-config.token';
 import { ROUTE_PATHS } from '../../core/constants/route-paths.constants';
 import { ThemeService } from '../../core/services/theme.service';
-import { WalletStatusBadgeComponent } from '../../features/wallet/components/wallet-status-badge/wallet-status-badge.component';
+import { UserMenuComponent } from '../../features/auth/components/user-menu/user-menu.component';
 
 type NavItem = {
   path: string;
@@ -29,7 +30,7 @@ type NavItem = {
 @Component({
   selector: 'app-shell',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, WalletStatusBadgeComponent, LucideAngularModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, UserMenuComponent, LucideAngularModule],
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -47,6 +48,7 @@ export class ShellComponent {
     { path: `/${ROUTE_PATHS.DASHBOARD}`, label: 'Dashboard',       icon: LayoutDashboard },
     { path: `/${ROUTE_PATHS.MARKETS}`,   label: 'Market Explorer', icon: TrendingUp },
     { path: `/${ROUTE_PATHS.PORTFOLIO}`, label: 'My Portfolio',    icon: Briefcase },
+    { path: `/${ROUTE_PATHS.CONNECT}`,   label: 'Wallet',          icon: Wallet },
     { path: `/${ROUTE_PATHS.SETTINGS}`,  label: 'Settings',        icon: Settings },
     { path: `/${ROUTE_PATHS.ABOUT}`,     label: 'About',           icon: Info },
   ];

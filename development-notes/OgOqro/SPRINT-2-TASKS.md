@@ -1,85 +1,133 @@
-# Sprint 2 — OgOqro-ს დავალებები
+# Sprint 2 — OgOqro Task Card
 
-გამარჯობა! KiriaIT-მა skeleton ფაილები გამოგიმზადა.
-**შენი ფაილები მხოლოდ შენია** — სხვის კოდში არ გჭირდება შეხება.
+Hi! KiriaIT prepared the skeleton files.
+**Only edit your files** — you do not need to change other contributors' code.
 
 ---
 
-## შენი დავალებები — მოკლე სია
+## Project context (read first)
 
-| # | რა | ფაილი (შენი) |
-|---|-----|--------------|
+These are **already implemented by KiriaIT**. Do not change them — your work plugs into them only.
+
+| Area | Status | Your interaction |
+|------|--------|------------------|
+| **Crypto prices** | Live Binance Spot Testnet via `MarketDataService` **[P-02]** | **Read-only** — inject in `PortfolioService` |
+| **Login / session** | Supabase `AuthService` + `authGuard` on `/portfolio` | Do not touch `auth/`; test portfolio while logged in |
+| **Wallet connect** | `WalletService` + `/connect` (demo Web3 — **not** login) | Do not touch `wallet/` or wallet services |
+| **Markets page** | Freemason-12's scope | Do not touch `markets/` |
+| **Mock crypto prices** | Not used | Do not create `mock-holdings` with hardcoded `price: 67230` |
+
+> **Update (2026-05):** Prices come from **Binance**. Portfolio uses a **seed** only for how many coins you hold (amounts) per **[P-03]** — not for market prices.
+> Your scope: **portfolio** + **about** + diary.
+
+### Mock vs live (your table only)
+
+| Data | Sprint 2 source |
+|------|-----------------|
+| Holding **amounts** | `PORTFOLIO_SEED` constant — demo portfolio **[P-03]** |
+| **Price**, **value**, **24h %** | `MarketDataService.getTickerSnapshot()` — live Binance |
+| Email / password | Supabase Auth — KiriaIT (not in `public.profiles`) |
+
+---
+
+## Your tasks at a glance
+
+| # | What | File(s) |
+|---|------|---------|
 | O1 | `PortfolioHolding` model | `src/app/core/models/portfolio.model.ts` |
-| O2 | `MOCK_HOLDINGS` constant | `src/app/core/constants/mock-holdings.constants.ts` ← **შენ ქმნი** |
-| O3 | `PortfolioService` — signal + computed | `src/app/core/services/portfolio.service.ts` |
-| O4 | `PortfolioPageComponent` template wiring | `src/app/features/portfolio/pages/portfolio-page.component.ts` |
-| O5 | About გვერდი — RS School ლოგო | `src/app/features/about/pages/about-page.component.html` |
+| O2 | Seed data — `symbol` + `amount` only (no prices) | `src/app/core/constants/portfolio-seed.constants.ts` ← **you create** |
+| O3 | `PortfolioService` — seed + `MarketDataService` → signals/computed | `src/app/core/services/portfolio.service.ts` |
+| O4 | `PortfolioPageComponent` wiring + loading/error | `portfolio-page.component.ts` + `.html` |
+| O5 | About page — RS School logo **[P-05]** | `about-page.component.html` |
 | O6 | Sprint 2 diary | `development-notes/OgOqro/OgOqro-sprint-2-YYYY-MM-DD.md` |
 
-> **MockApiService-ს ნუ შეეხები** — ის Freemason-12-ის ფაილია.
-> Portfolio მონაცემები პირდაპირ signal(MOCK_HOLDINGS)-იდან მოდის, HTTP არ სჭირდება.
+### Do NOT touch (will break team work or duplicate KiriaIT)
+
+`auth/`, `markets/`, `wallet/`, `shell/`, `dashboard/`, `app.routes.ts`,
+`market-data.service.ts`, `auth.service.ts`, `supabase.service.ts`, `wallet.service.ts`,
+`mock-api.service.ts`, `mock-blockchain.service.ts`
 
 ---
 
-## ნაბიჯ-ნაბიჯ
+## O1 — PortfolioHolding model
 
-### ნაბიჯი 1 — PortfolioHolding model
+**File:** `src/app/core/models/portfolio.model.ts`
 
-**ფაილი:** `src/app/core/models/portfolio.model.ts` (stub გახსნილია)
-
-შეავსე interface:
 ```ts
 export interface PortfolioHolding {
-  symbol: string;        // მაგ: 'BTC'
-  name: string;          // მაგ: 'Bitcoin'
-  amount: number;        // მაგ: 0.5
-  price: number;         // მაგ: 67230
+  symbol: string;        // e.g. 'BTC'
+  name: string;          // e.g. 'Bitcoin' — from seed/map
+  amount: number;        // e.g. 0.5
+  price: number;         // from MarketDataService
   value: number;         // amount * price
-  changePct24h: number;  // 24 საათის %, შეიძლება უარყოფითი
+  changePct24h: number;  // from ticker; may be negative
 }
 ```
 
 ---
 
-### ნაბიჯი 2 — MOCK_HOLDINGS constant
+## O2 — PORTFOLIO_SEED (amounts only)
 
-**შექმენი ახალი ფაილი:** `src/app/core/constants/mock-holdings.constants.ts`
+**New file:** `src/app/core/constants/portfolio-seed.constants.ts`
 
 ```ts
-import { PortfolioHolding } from '../models/portfolio.model';
+export interface PortfolioSeedEntry {
+  symbol: string;   // must match Binance base, e.g. BTC from BTCUSDT
+  name: string;
+  amount: number;
+}
 
-export const MOCK_HOLDINGS: PortfolioHolding[] = [
-  { symbol: 'BTC',  name: 'Bitcoin',   amount: 0.5,  price: 67230,  value: 33615,  changePct24h: 2.45  },
-  { symbol: 'ETH',  name: 'Ethereum',  amount: 5.2,  price: 3460,   value: 17992,  changePct24h: -1.23 },
-  { symbol: 'SOL',  name: 'Solana',    amount: 45,   price: 178.92, value: 8051,   changePct24h: 4.56  },
-  { symbol: 'LINK', name: 'Chainlink', amount: 200,  price: 18.45,  value: 3690,   changePct24h: 1.89  },
-  { symbol: 'UNI',  name: 'Uniswap',  amount: 100,  price: 12.34,  value: 1234,   changePct24h: -0.56 },
+export const PORTFOLIO_SEED: PortfolioSeedEntry[] = [
+  { symbol: 'BTC',  name: 'Bitcoin',   amount: 0.5 },
+  { symbol: 'ETH',  name: 'Ethereum',  amount: 5.2 },
+  { symbol: 'SOL',  name: 'Solana',    amount: 45 },
+  { symbol: 'ADA',  name: 'Cardano',   amount: 1200 },
+  { symbol: 'BNB',  name: 'BNB',       amount: 3 },
 ];
 ```
 
----
+Pick symbols that exist in `BINANCE_TESTNET.SNAPSHOT_SYMBOLS` (`market-api.constants.ts`).
 
-### ნაბიჯი 3 — PortfolioService
-
-**ფაილი:** `src/app/core/services/portfolio.service.ts` (stub გახსნილია)
-
-1. import-ები uncomment-ი გააკეთე (ფაილის თავში)
-2. შეავსე 4 TODO ბლოკი — ინსტრუქცია ფაილის შიგნით გიწერია
+**Do not** create `mock-holdings.constants.ts` with hardcoded prices.
 
 ---
 
-### ნაბიჯი 4 — PortfolioPageComponent wiring
+## O3 — PortfolioService (seed + live prices)
 
-**ფაილი:** `src/app/features/portfolio/pages/portfolio-page.component.ts`
+**File:** `src/app/core/services/portfolio.service.ts`
 
-1. import-ში `inject` დაამატე
-2. `inject(PortfolioService)` uncomment-ი გააკეთე
-3. placeholder `computed(() => ...)`-ები შეცვალე სერვისის რეალური computed-ებით:
+1. `inject(MarketDataService)` — **read only**; do not edit `market-data.service.ts`.
+2. Load tickers (`toSignal(...)`, or `resource()` — see `MarketOverviewComponent`).
+3. Implement signals/computed:
 
 ```ts
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { PortfolioService } from '../../../core/services/portfolio.service';
-// ...
+private readonly _holdings = signal<PortfolioHolding[]>([]);
+
+readonly holdings = this._holdings.asReadonly();
+readonly totalValue = computed(() =>
+  this._holdings().reduce((sum, h) => sum + h.value, 0),
+);
+readonly bestAsset = computed(() => {
+  const sorted = [...this._holdings()].sort((a, b) => b.changePct24h - a.changePct24h);
+  return sorted[0]?.symbol ?? '—';
+});
+readonly change7d = computed(() => '+14.05%'); // Sprint 2 demo label; real 7d in Sprint 3
+```
+
+4. After tickers load: merge `PORTFOLIO_SEED` + snapshot → fill `_holdings` (price/value/changePct24h from ticker).
+5. Loading/error: `status` signal in the service **or** `resource()` in the component — at least one **[O-12]**.
+
+> `/portfolio` is behind `authGuard` — log in via Supabase before testing.
+
+> Sprint 3 may move seed data to Supabase; keep `PortfolioHolding` and public API stable.
+
+---
+
+## O4 — PortfolioPageComponent
+
+**File:** `src/app/features/portfolio/pages/portfolio-page.component.ts`
+
+```ts
 private readonly portfolioService = inject(PortfolioService);
 
 protected readonly totalValue = computed(() => {
@@ -92,19 +140,14 @@ protected readonly bestAsset   = computed(() => this.portfolioService.bestAsset(
 protected readonly holdings    = computed(() => this.portfolioService.holdings());
 ```
 
-**ფაილი:** `src/app/features/portfolio/pages/portfolio-page.component.html`
-
-hardcoded ტექსტები (`$147.34K`, `12`, `BTC` და ა.შ.) შეცვალე `{{ totalValue() }}` და ა.შ.-თ.
-ყველა TODO კომენტარი გეტყვის სად რა.
+**HTML:** replace hardcoded `$147.34K`, `12`, `BTC` with `{{ totalValue() }}`, `{{ holdings().length }}`, etc.
+Add loading/error UI when the service or `resource` reports an error.
 
 ---
 
-### ნაბიჯი 5 — About გვერდი (RS School ლოგო — სავალდებულო)
+## O5 — About page (RS School logo)
 
-**ფაილი:** `src/app/features/about/pages/about-page.component.html`
-
-ნახე TODO კომენტარი "RS SCHOOL LOGO" ბლოკში.
-შეცვალე placeholder `<div>` ამით:
+**File:** `src/app/features/about/pages/about-page.component.html`
 
 ```html
 <a href="https://rs.school" target="_blank" rel="noopener noreferrer" aria-label="RS School">
@@ -117,41 +160,37 @@ hardcoded ტექსტები (`$147.34K`, `12`, `BTC` და ა.შ.) შ
 </a>
 ```
 
-**ლოგო სავალდებულოა** — გარეშე ჩათვლა ვერ მოხდება ([P-05]).
+Required by **[P-05]**.
 
 ---
 
-### ნაბიჯი 6 — Sprint 2 diary
+## O6 — Sprint 2 diary
 
-შექმენი: `development-notes/OgOqro/OgOqro-sprint-2-2026-05-XX.md`
+Create: `development-notes/OgOqro/OgOqro-sprint-2-2026-05-XX.md`
 
-ფორმატი: Sprint 1 diary-ს ანალოგი. სავალდებულო:
-- რა ააშენე: `PortfolioPageComponent`, `AboutPageComponent`, `PortfolioService`
-- რა გაგიჭირდა
-- Sprint 3-ის გეგმა
-- `≥2 feature components` — PortfolioPageComponent + AboutPageComponent
+Include:
 
-**PR წესები:**
-- შენი GitHub ანგარიშიდან (OgOqro)
-- PR-ით, main-ზე პირდაპირ არ დაპუშო
-- diary PR squash-merge არ გააკეთო
+- What you built: `PortfolioPageComponent`, `AboutPageComponent`, `PortfolioService`
+- Seed amounts vs live prices (`MarketDataService`)
+- What was hard, Sprint 3 plan
+- **≥2** feature components (portfolio + about)
 
 ---
 
-## PR-ის გახსნა
+## How to open a PR
 
 ```bash
-git checkout -b feat/ogoqro-portfolio-page
-# ... ცვლილებები ...
+git checkout -b feat/ogoqro-portfolio
 git add .
-git commit -m "feat(portfolio): add PortfolioPageComponent and PortfolioService"
-git push origin feat/ogoqro-portfolio-page
-# GitHub-ზე PR, sprint-2 issue-ს დაუკავშირე
+git commit -m "feat(portfolio): PortfolioService with live prices and portfolio page"
+git push origin feat/ogoqro-portfolio
+# open PR on GitHub and link the sprint-2 issue
 ```
 
 ---
 
-## დახმარება?
+## If you get stuck
 
-- KiriaIT — `WalletService` (სიგნალების reference, `src/app/core/services/wallet.service.ts`)
-- `.cursor/rules/rule.mdc` — ყველა convention
+- **Live prices:** `MarketOverviewComponent`, `MarketDataService`
+- **Signals:** `AuthService` (read-only reference)
+- **Conventions:** `.cursor/rules/rule.mdc` — **[P-02]**, **[P-03]**, **[O-12]**
