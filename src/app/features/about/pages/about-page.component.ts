@@ -1,12 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 
-/**
- * TODO(OgOqro) — ამ ფაილში გასაკეთებელი:
- *
- * ეს კომპონენტი უკვე სწორადაა დაყენებული (standalone, OnPush).
- * template-ში (about-page.component.html) გჭირდება RS School-ის ლოგოს დამატება.
- * დეტალები: development-notes/OgOqro/SPRINT-2-TASKS.md
- */
 @Component({
   selector: 'app-about-page',
   standalone: true,
@@ -14,4 +7,14 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './about-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AboutPageComponent {}
+export class AboutPageComponent {
+  protected readonly teamExpanded = signal(false);
+
+  protected readonly toggleLabel = computed(() =>
+    this.teamExpanded() ? 'Hide team details' : 'Show team details',
+  );
+
+  protected toggleTeam(): void {
+    this.teamExpanded.update((v) => !v);
+  }
+}

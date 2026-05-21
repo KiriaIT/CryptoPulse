@@ -1,40 +1,46 @@
-import { Injectable } from '@angular/core';
-// TODO(OgOqro) ნაბიჯი 1: uncomment the lines below after creating those files
-// import { computed, signal } from '@angular/core';
-// import { PortfolioHolding } from '../models/portfolio.model';
-// import { MOCK_HOLDINGS } from '../constants/mock-holdings.constants';
+import { computed, Injectable, signal } from '@angular/core';
+import { PortfolioHolding } from '../models/portfolio.model';
+import { MarketTickerRow } from '../models';
+import { PORTFOLIO_SEED } from '../constants/portfolio-seed.constants';
 
-/**
- * PortfolioService — owned entirely by OgOqro.
- *
- * Holds portfolio state as signals. No HTTP, no MockApiService needed —
- * mock data comes directly from MOCK_HOLDINGS constant per [P-03].
- *
- * YOUR TASK (OgOqro) — fill in the 4 TODO blocks below:
- *
- * TODO 1 — private holdings signal (source of truth):
- *   private readonly _holdings = signal<PortfolioHolding[]>(MOCK_HOLDINGS);
- *   readonly holdings = this._holdings.asReadonly();
- *
- * TODO 2 — total portfolio value:
- *   readonly totalValue = computed(() =>
- *     this._holdings().reduce((sum, h) => sum + h.value, 0)
- *   );
- *
- * TODO 3 — best performing asset (highest changePct24h):
- *   readonly bestAsset = computed(() => {
- *     const sorted = [...this._holdings()].sort((a, b) => b.changePct24h - a.changePct24h);
- *     return sorted[0]?.symbol ?? '—';
- *   });
- *
- * TODO 4 — 7-day change label (mock value is fine per [P-03]):
- *   readonly change7d = computed(() => '+14.05%');
- *
- * კონვენციები:
- *   private readonly _x = signal(...)  →  წერა (private, [Q-06])
- *   readonly x = this._x.asReadonly()  →  კითხვა (public)
- */
 @Injectable({ providedIn: 'root' })
 export class PortfolioService {
-  // TODO(OgOqro): implement the 4 blocks described above
+  private readonly _holdings = signal<PortfolioHolding[]>([]);
+
+  readonly holdings = this._holdings.asReadonly();
+
+  readonly totalValue = computed(() => this._holdings().reduce((sum, h) => sum + h.value, 0));
+
+  readonly bestAsset = computed(() => {
+    const sorted = [...this._holdings()].sort((a, b) => b.changePct24h - a.changePct24h);
+    return sorted[0]?.symbol ?? '—';
+  });
+
+  readonly change7d = computed(() => '+14.05%');
+
+  setHoldingsFromTickers(tickers: MarketTickerRow[]): void {
+    const byPair = new Map(tickers.map((row) => [row.symbol, row]));
+
+    const merged: PortfolioHolding[] = PORTFOLIO_SEED.map((entry) => {
+      const pair = `${entry.symbol}USDT`;
+      const row = byPair.get(pair);
+      const price = row?.lastPrice ?? 0;
+      const changePct24h = row?.changePct24h ?? 0;
+
+      return {
+        symbol: entry.symbol,
+        name: entry.name,
+        amount: entry.amount,
+        price,
+        value: entry.amount * price,
+        changePct24h,
+      };
+    });
+
+    this._holdings.set(merged);
+  }
+
+  clearHoldings(): void {
+    this._holdings.set([]);
+  }
 }
