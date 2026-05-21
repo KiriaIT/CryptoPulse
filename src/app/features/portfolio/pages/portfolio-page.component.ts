@@ -1,19 +1,46 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  resource,
+} from '@angular/core';
 
 import { DecimalPipe } from '@angular/common';
 import { PortfolioService } from '../../../core/services/portfolio.service';
-import { PortfolioHolding } from '../../../core';
+import { MarketDataService, MarketTickerRow, PortfolioHolding } from '../../../core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-portfolio-page',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, MatButtonModule, MatProgressSpinnerModule],
   templateUrl: './portfolio-page.component.html',
   styleUrl: './portfolio-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PortfolioPageComponent {
   private readonly portfolioService = inject(PortfolioService);
+  private readonly marketData = inject(MarketDataService);
+
+  protected readonly snapshot = resource<MarketTickerRow[], unknown>({
+    loader: () => firstValueFrom(this.marketData.getTickerSnapshot()),
+  });
+
+  constructor() {
+    effect(() => {
+      if (this.snapshot.isLoading() || this.snapshot.error()) {
+        this.portfolioService.clearHoldings();
+        return;
+      }
+      if (this.snapshot.hasValue()) {
+        this.portfolioService.setHoldingsFromTickers(this.snapshot.value() ?? []);
+      }
+    });
+  }
 
   protected readonly totalValue = computed<string>(() => {
     const value = this.portfolioService.totalValue();
