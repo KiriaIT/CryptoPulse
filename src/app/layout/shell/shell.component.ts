@@ -32,7 +32,6 @@ type NavItem = {
   standalone: true,
   imports: [RouterOutlet, RouterLink, RouterLinkActive, UserMenuComponent, LucideAngularModule],
   templateUrl: './shell.component.html',
-  styleUrl: './shell.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShellComponent {

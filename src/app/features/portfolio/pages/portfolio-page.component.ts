@@ -19,7 +19,6 @@ import { firstValueFrom } from 'rxjs';
   standalone: true,
   imports: [DecimalPipe, MatButtonModule, MatProgressSpinnerModule],
   templateUrl: './portfolio-page.component.html',
-  styleUrl: './portfolio-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PortfolioPageComponent {

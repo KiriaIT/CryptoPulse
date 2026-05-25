@@ -70,7 +70,6 @@ const PLACEHOLDER_MARKETS: MarketRow[] = [];
   standalone: true,
   imports: [DecimalPipe],
   templateUrl: './markets-page.component.html',
-  styleUrl: './markets-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MarketsPageComponent {

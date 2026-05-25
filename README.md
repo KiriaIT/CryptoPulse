@@ -23,8 +23,12 @@ Team submission for the [Rolling Scopes Angular](https://rs.school) 4-sprint cou
 | Styling | Tailwind CSS v4 with CSS-variable design tokens |
 | UI kit | Angular Material, Lucide Angular |
 | Charts | ngx-charts |
-| Tooling | ESLint 9 flat config, Prettier, Vitest |
+| Tooling | ESLint 9 flat config, Prettier, Vitest, Husky (pre-commit lint) |
 | Package manager | Yarn 1.22 |
+
+## Coding standards
+
+Team and mentor guidelines (Tailwind-only styling, constants in separate files, naming, Husky): **[docs/CODING_STANDARDS.md](./docs/CODING_STANDARDS.md)**.
 
 ## Local setup
 
@@ -32,9 +36,11 @@ Team submission for the [Rolling Scopes Angular](https://rs.school) 4-sprint cou
 yarn install
 yarn start          # ng serve, http://localhost:4200
 yarn build          # production build
-yarn lint           # ESLint
+yarn lint           # ESLint (also runs on pre-commit via Husky)
 yarn test           # Vitest (Sprint 4)
 ```
+
+After `yarn install`, Husky installs automatically (`prepare` script). To skip hooks in an emergency only: `git commit --no-verify` (avoid on shared branches).
 
 Node version aligned via NVM (`.nvmrc` — currently Node 22 for CI parity).
 

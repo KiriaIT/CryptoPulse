@@ -24,7 +24,6 @@ import { TopMoversComponent } from '../components/top-movers/top-movers.componen
     TopMoversComponent,
   ],
   templateUrl: './dashboard-page.component.html',
-  styleUrl: './dashboard-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardPageComponent {

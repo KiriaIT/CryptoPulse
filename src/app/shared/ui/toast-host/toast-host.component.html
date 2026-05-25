@@ -5,14 +5,14 @@
 >
   @for (toast of toasts(); track toast.id) {
     <div
-      class="toast pointer-events-auto flex items-start gap-3 border rounded-xl px-4 py-3 shadow-lg backdrop-blur-sm"
-      [class]="stylesFor(toast.variant)"
+      class="pointer-events-auto flex items-start gap-3 border rounded-xl px-4 py-3 shadow-lg backdrop-blur-sm animate-toast-in motion-reduce:animate-none"
+      [class]="variantStyles[toast.variant]"
       role="alert"
     >
       <lucide-icon
-        [img]="iconFor(toast.variant)"
-        [size]="18"
-        [class]="iconColorFor(toast.variant) + ' shrink-0 mt-0.5'"
+        [img]="variantIcon[toast.variant]"
+        [size]="iconSize"
+        [class]="variantIconColor[toast.variant] + ' shrink-0 mt-0.5'"
         aria-hidden="true"
       />
       <p class="text-sm leading-snug flex-1 break-words">{{ toast.message }}</p>
@@ -22,7 +22,7 @@
         (click)="dismiss(toast.id)"
         aria-label="Dismiss notification"
       >
-        <lucide-icon [img]="closeIcon" [size]="15" />
+        <lucide-icon [img]="closeIcon" [size]="closeIconSize" />
       </button>
     </div>
   }

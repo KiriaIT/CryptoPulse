@@ -4,7 +4,6 @@ import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/c
   selector: 'app-about-page',
   standalone: true,
   templateUrl: './about-page.component.html',
-  styleUrl: './about-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutPageComponent {
