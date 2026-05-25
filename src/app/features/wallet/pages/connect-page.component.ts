@@ -21,7 +21,6 @@ import { WalletProvider } from '../../../core/models/wallet.model';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './connect-page.component.html',
-  styleUrl: './connect-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConnectPageComponent {

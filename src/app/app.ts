@@ -7,7 +7,6 @@ import { ToastHostComponent } from './shared/ui/toast-host/toast-host.component'
   selector: 'app-root',
   imports: [RouterOutlet, ToastHostComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {}

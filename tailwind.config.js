@@ -25,6 +25,15 @@ module.exports = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      keyframes: {
+        'toast-in': {
+          from: { opacity: '0', transform: 'translateY(-8px) scale(0.98)' },
+          to: { opacity: '1', transform: 'translateY(0) scale(1)' },
+        },
+      },
+      animation: {
+        'toast-in': 'toast-in 0.22s ease-out both',
+      },
     },
   },
 };

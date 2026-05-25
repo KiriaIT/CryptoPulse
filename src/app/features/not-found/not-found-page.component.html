@@ -1,6 +1,9 @@
-<section class="not-found">
-  <p class="not-found__eyebrow">404</p>
-  <h1 class="not-found__title">{{ copy.TITLE }}</h1>
-  <p class="not-found__body">{{ copy.BODY }}</p>
-  <a class="not-found__cta" [routerLink]="dashboardLink">{{ copy.CTA_LABEL }}</a>
+<section class="max-w-md mx-auto my-8 px-4 text-center">
+  <p class="m-0 text-xs tracking-[0.2em] uppercase text-muted-foreground">404</p>
+  <h1 class="my-2 text-[1.75rem] font-semibold text-foreground">{{ copy.TITLE }}</h1>
+  <p class="mb-5 text-muted-foreground leading-normal">{{ copy.BODY }}</p>
+  <a
+    class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary text-primary-foreground no-underline font-medium focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+    [routerLink]="dashboardLink"
+  >{{ copy.CTA_LABEL }}</a>
 </section>
